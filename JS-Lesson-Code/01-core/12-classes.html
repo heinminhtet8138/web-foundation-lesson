@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12 — Classes</title>
+</head>
+<body>
+
+  <h1>12 — Classes (အရာဝတ္ထု ပုံစံခွက်)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ Class အခြေခံ
+    // ============================================
+    class Student {
+      // constructor — object ဆောက်တဲ့အခါ တစ်ခါ run
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      // method
+      introduce() {
+        return `ကျွန်တော့်နာမည် ${this.name}၊ အသက် ${this.age}`;
+      }
+    }
+
+    let s1 = new Student("Aung Aung", 20);
+    let s2 = new Student("Su Su", 22);
+
+    console.log(s1.name);          // Aung Aung
+    console.log(s1.introduce());
+    console.log(s2.introduce());
+
+    // ============================================
+    // ၂။ Default value နဲ့ Method အများ
+    // ============================================
+    class Product {
+      constructor(name, price, qty = 1) {
+        this.name = name;
+        this.price = price;
+        this.qty = qty;
+      }
+
+      total() {
+        return this.price * this.qty;
+      }
+
+      addQty(n) {
+        this.qty += n;
+      }
+    }
+
+    let laptop = new Product("Laptop", 2000000, 2);
+    console.log(laptop.total());    // 4000000
+
+    laptop.addQty(1);
+    console.log(laptop.total());    // 6000000
+
+    // ============================================
+    // ၃။ Getter / Setter
+    // ============================================
+    class Person {
+      constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+      }
+
+      // get — property လို ဖတ်
+      get fullName() {
+        return this.firstName + " " + this.lastName;
+      }
+
+      // set — property လို ထည့်
+      set fullName(value) {
+        let parts = value.split(" ");
+        this.firstName = parts[0];
+        this.lastName = parts[1];
+      }
+    }
+
+    let p = new Person("Aung", "Aung");
+    console.log(p.fullName);       // Aung Aung
+
+    p.fullName = "Su Su";
+    console.log(p.firstName);      // Su
+    console.log(p.lastName);       // Su
+
+    // ============================================
+    // ၄။ Inheritance (extends)
+    // ============================================
+    class Animal {
+      constructor(name) {
+        this.name = name;
+      }
+
+      speak() {
+        return this.name + " အသံ မြည်တယ်";
+      }
+    }
+
+    class Dog extends Animal {
+      constructor(name, breed) {
+        super(name);           // ⚠️ parent constructor ကို ခေါ်
+        this.breed = breed;
+      }
+
+      speak() {
+        return this.name + " က ဝုတ် ဝုတ် လုပ်တယ်";
+      }
+
+      info() {
+        return this.breed + " မျိုး";
+      }
+    }
+
+    let dog = new Dog("Bobby", "Poodle");
+
+    console.log(dog.speak());    // override လုပ်ထား
+    console.log(dog.info());
+    console.log(dog instanceof Dog);      // true
+    console.log(dog instanceof Animal);   // true
+
+    // ============================================
+    // ၅။ static — object မဆောက်ဘဲ ခေါ်နိုင်
+    // ============================================
+    class MathHelper {
+      static add(a, b) {
+        return a + b;
+      }
+
+      static square(n) {
+        return n * n;
+      }
+    }
+
+    console.log(MathHelper.add(3, 4));     // 7
+    console.log(MathHelper.square(5));     // 25
+
+    // ============================================
+    // ၆။ လက်တွေ့ — Class နဲ့ စာရင်း
+    // ============================================
+    class Cart {
+      constructor() {
+        this.items = [];
+      }
+
+      add(product) {
+        this.items.push(product);
+      }
+
+      total() {
+        return this.items.reduce((sum, item) => sum + item.price, 0);
+      }
+
+      count() {
+        return this.items.length;
+      }
+    }
+
+    let cart = new Cart();
+
+    cart.add({ name: "Laptop", price: 2000000 });
+    cart.add({ name: "Mouse", price: 50000 });
+
+    console.log(cart.count());    // 2
+    console.log(cart.total());    // 2050000
+  </script>
+
+</body>
+</html>

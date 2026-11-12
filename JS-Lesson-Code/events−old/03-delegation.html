@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events 03 — Event Delegation</title>
+</head>
+<body>
+
+  <h1>Events 03 — Event Delegation</h1>
+
+  <!-- 👨‍🏫 ဆရာမှတ်ချက်:
+       button တွေကို JS က အလိုအလျောက် ဆောက်တယ်။
+       အဲဒါကြောင့် button တစ်ခုချင်းမှာ listener မတပ်ဘဲ
+       parent (ul) တစ်ခုတည်းမှာ တပ်တယ်။ -->
+
+  <ul id="list"></ul>
+
+  <button id="add-btn">အသစ် ထည့်</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let list = document.getElementById("list");
+
+    // ============================================
+    // ၁။ နမူနာ data
+    // ============================================
+    let fruits = ["Apple", "Banana", "Mango"];
+
+    function render() {
+      list.innerHTML = "";
+
+      fruits.forEach((fruit, index) => {
+        let li = document.createElement("li");
+
+        li.textContent = fruit + " ";
+
+        // button တစ်ခုချင်း ဆောက်
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "ဖျက်";
+
+        // 🧑‍🎓 မှတ်ချက်: index ကို data-index မှာ သိမ်းတယ်
+        deleteBtn.dataset.index = index;
+
+        li.append(deleteBtn);
+        list.append(li);
+      });
+    }
+
+    render();
+
+    // ============================================
+    // ၂။ ❌ မကောင်းတဲ့ နည်း
+    // ============================================
+    // button တစ်ခုချင်းမှာ listener တပ်ရင်
+    // အသစ် ထည့်တိုင်း ပြန်တပ်ရမယ်။
+    //
+    // document.querySelectorAll("button").forEach((btn) => {
+    //   btn.addEventListener("click", ...);
+    // });
+
+    // ============================================
+    // ၃။ ✅ Delegation — parent မှာ တစ်ခုတည်း တပ်
+    // ============================================
+    list.addEventListener("click", (event) => {
+      // နှိပ်ခံရတဲ့ နေရာက button ဟုတ်မဟုတ် စစ်
+      let btn = event.target.closest("button");
+
+      if (!btn) {
+        return;
+      }
+
+      let index = Number(btn.dataset.index);
+
+      show("ဖျက်မယ်: " + fruits[index]);
+
+      fruits.splice(index, 1);
+      render();
+    });
+
+    // ⚠️ event.target က <li> ဖြစ်နိုင်တယ်၊ <button> ဖြစ်နိုင်တယ်
+    // closest() က အနီးဆုံး button ကို ရှာပေးတယ်
+
+    // ============================================
+    // ၄။ အသစ် ထည့်တဲ့ button
+    // ============================================
+    let addBtn = document.getElementById("add-btn");
+
+    addBtn.addEventListener("click", () => {
+      fruits.push("Fruit " + (fruits.length + 1));
+      render();
+    });
+
+    // အသစ် ထည့်တဲ့ button တွေအတွက် listener ထပ် မတပ်ရဘူး
+    // — Delegation ရဲ့ အားသာချက်
+
+    // ============================================
+    // ၅။ List အတွင်း တစ်ခုချင်း လှည့်ကြည့်
+    // ============================================
+    list.addEventListener("click", (event) => {
+      let li = event.target.closest("li");
+
+      if (li && !event.target.closest("button")) {
+        show("ရွေးတယ်: " + li.textContent.trim());
+        li.style.background = "#fde68a";
+      }
+    });
+
+    // ============================================
+    // ၆။ Delegation နဲ့ Table
+    // ============================================
+    let table = document.createElement("table");
+    table.border = "1";
+    table.style.marginTop = "12px";
+
+    table.innerHTML = `
+      <thead>
+        <tr><th>နာမည်</th><th>လုပ်</th></tr>
+      </thead>
+      <tbody id="tbody">
+        <tr><td>Aung</td><td><button class="edit" data-id="1">ပြင်</button></td></tr>
+        <tr><td>Su</td><td><button class="edit" data-id="2">ပြင်</button></td></tr>
+      </tbody>
+    `;
+
+    document.body.append(table);
+
+    table.addEventListener("click", (event) => {
+      let btn = event.target.closest(".edit");
+
+      if (!btn) {
+        return;
+      }
+
+      show("ပြင်မယ့် id: " + btn.dataset.id);
+    });
+
+    // 🧑‍🎓 မှတ်ချက်: table ထဲ row တွေ ဘယ်လောက် ထည့်ထည့်
+    // listener က တစ်ခုတည်း။
+  </script>
+
+</body>
+</html>

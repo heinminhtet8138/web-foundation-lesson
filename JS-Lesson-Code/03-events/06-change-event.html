@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change Event</title>
+</head>
+<body>
+
+    <h1>Choose Your Country</h1>
+
+    <!-- နိုင်ငံရွေးချယ်ဖို့ Dropdown -->
+    <select id="country">
+
+        <option value="">Select Country</option>
+        <option value="Myanmar">Myanmar</option>
+        <option value="Thailand">Thailand</option>
+        <option value="Japan">Japan</option>
+        <option value="Singapore">Singapore</option>
+
+    </select>
+
+    <!-- ရွေးထားတဲ့နိုင်ငံကို ပြမယ့်နေရာ -->
+    <h2 id="result">No country selected</h2>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const country = document.getElementById("country");
+        const result = document.getElementById("result");
+
+        // Dropdown ရဲ့ Value ပြောင်းလဲတဲ့အခါ
+        country.addEventListener("change", function() {
+
+            // ရွေးထားတဲ့နိုင်ငံကို ပြသခြင်း
+            result.textContent = "You selected: " + country.value;
+
+        });
+
+        // ရှင်းပြရန်
+        // - select က Dropdown တစ်ခု ဖန်တီးပေးတယ်။
+        // - option က ရွေးချယ်စရာတွေ ဖြစ်တယ်။
+        // - change က ရွေးချယ်ထားတဲ့ Value ပြောင်းလဲတဲ့အခါ အလုပ်လုပ်တယ်။
+        // - country.value က ရွေးထားတဲ့ Option ရဲ့ Value ကို ရယူတယ်။
+
+    </script>
+
+</body>
+</html>

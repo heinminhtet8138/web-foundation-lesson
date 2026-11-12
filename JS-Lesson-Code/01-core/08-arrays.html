@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>08 — Arrays</title>
+</head>
+<body>
+
+  <h1>08 — Arrays (တန်ဖိုး အစုအဝေး)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ Array ဆောက်ခြင်း
+    // ============================================
+    let fruits = ["apple", "banana", "mango"];
+
+    console.log(fruits);
+    console.log(fruits[0]);       // apple
+    console.log(fruits.length);   // 3
+
+    // ============================================
+    // ၂။ ထည့် / ဖျက်
+    // ============================================
+    fruits.push("orange");        // အနောက်မှာ ထည့်
+    console.log(fruits);
+
+    fruits.pop();                 // အနောက်က ဖျက်
+    console.log(fruits);
+
+    fruits.unshift("kiwi");       // အရှေ့မှာ ထည့်
+    console.log(fruits);
+
+    fruits.shift();               // အရှေ့က ဖျက်
+    console.log(fruits);
+
+    // ============================================
+    // ၃။ ရှာခြင်း
+    // ============================================
+    let numbers = [10, 20, 30, 40];
+
+    console.log(numbers.indexOf(30));    // 2
+    console.log(numbers.indexOf(99));    // -1 (မတွေ့)
+    console.log(numbers.includes(20));   // true
+    console.log(numbers.includes(99));   // false
+
+    // ============================================
+    // ၄။ slice / splice
+    // ============================================
+    // slice — မူရင်း မပျက်၊ အပိုင်း ယူ
+    console.log(numbers.slice(1, 3));    // [20, 30]
+    console.log(numbers);                // [10, 20, 30, 40]
+
+    // splice — မူရင်းကို ပြင်တယ်
+    let removed = numbers.splice(1, 2);  // index 1 ကနေ ၂ ခု ဖျက်
+    console.log(removed);                // [20, 30]
+    console.log(numbers);                // [10, 40]
+
+    // ============================================
+    // ၅။ forEach — တစ်ခုချင်း လုပ်
+    // ============================================
+    let names = ["Aung", "Su", "Kyaw"];
+
+    names.forEach(function (name, index) {
+      console.log(index + " : " + name);
+    });
+
+    // arrow နဲ့ တို
+    names.forEach((name) => console.log(name));
+
+    // ============================================
+    // ၆။ map — တန်ဖိုး တစ်ခုချင်း ပြောင်းပြီး array အသစ်
+    // ============================================
+    let prices = [1000, 2000, 3000];
+
+    let withTax = prices.map((price) => price * 1.05);
+    console.log(withTax);
+
+    let doubled = [1, 2, 3].map((n) => n * 2);
+    console.log(doubled);   // [2, 4, 6]
+
+    // ============================================
+    // ၇။ filter — အခြေအနေ မှန်တာပဲ ယူ
+    // ============================================
+    let nums = [5, 12, 8, 20, 3];
+
+    let big = nums.filter((n) => n >= 10);
+    console.log(big);   // [12, 20]
+
+    // ============================================
+    // ၈။ find — ပထမဆုံး တွေ့တာကို ယူ
+    // ============================================
+    let users = [
+      { id: 1, name: "Aung" },
+      { id: 2, name: "Su" }
+    ];
+
+    let user = users.find((u) => u.id === 2);
+    console.log(user);   // { id: 2, name: "Su" }
+
+    // ============================================
+    // ၉။ reduce — တစ်ခုတည်း တန်ဖိုး ဖြစ်အောင် ပေါင်း
+    // ============================================
+    let sum = [1, 2, 3, 4].reduce((total, n) => total + n, 0);
+    console.log(sum);   // 10
+
+    let cart = [
+      { name: "Laptop", price: 2000, qty: 2 },
+      { name: "Mouse", price: 50, qty: 3 }
+    ];
+
+    let cartTotal = cart.reduce((total, item) => {
+      return total + item.price * item.qty;
+    }, 0);
+
+    console.log(cartTotal);   // 4150
+
+    // ============================================
+    // ၁၀။ sort / reverse / join
+    // ============================================
+    let letters = ["c", "a", "b"];
+    letters.sort();
+    console.log(letters);          // ["a", "b", "c"]
+
+    console.log(letters.join(", "));   // a, b, c
+
+    // ဂဏန်း စီရင် — function ပေးရတယ်
+    let scores = [40, 100, 1, 25];
+    scores.sort((a, b) => a - b);
+    console.log(scores);   // [1, 25, 40, 100]
+
+    // ============================================
+    // ၁၁။ split — string ကို array ဖြစ်အောင်
+    // ============================================
+    let text = "apple,banana,mango";
+    console.log(text.split(","));   // ["apple", "banana", "mango"]
+  </script>
+
+</body>
+</html>

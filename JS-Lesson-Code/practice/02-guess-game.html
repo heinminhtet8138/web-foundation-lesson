@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice 02 — ခန့်မှန်း ဂိမ်း</title>
+
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input { width: 90px; padding: 6px; }
+    button { padding: 6px 14px; cursor: pointer; }
+    .hint { font-weight: bold; }
+    .win { color: green; }
+    .lose { color: red; }
+  </style>
+</head>
+<body>
+
+  <h1>ခန့်မှန်း ဂိမ်း (၁ ကနေ ၁၀၀)</h1>
+
+  <p>ကွန်ပျူတာက ကျပန်း ဂဏန်း တစ်ခု ရွေးထားတယ်။ ခန့်မှန်းကြည့်ပါ။</p>
+
+  <p>
+    <input id="guess" type="number" min="1" max="100" placeholder="၁-၁၀၀">
+    <button id="check">ခန့်မှန်း</button>
+    <button id="reset">အသစ် စ</button>
+  </p>
+
+  <p id="hint" class="hint"></p>
+  <p>ကြိုးစားချက်: <span id="attempts">0</span></p>
+  <p>မှတ်တမ်း: <span id="history"></span></p>
+
+  <script>
+    // ============================================
+    // ၁။ ဂိမ်း အခြေအနေ
+    // ============================================
+    let secret = 0;
+    let attempts = 0;
+    let history = [];
+    let isOver = false;
+
+    let guessInput = document.getElementById("guess");
+    let hintEl = document.getElementById("hint");
+    let attemptsEl = document.getElementById("attempts");
+    let historyEl = document.getElementById("history");
+
+    // ============================================
+    // ၂။ ဂိမ်း စ
+    // ============================================
+    function startGame() {
+      secret = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      history = [];
+      isOver = false;
+
+      guessInput.value = "";
+      hintEl.textContent = "စပြီ။ ခန့်မှန်းပါ။";
+      hintEl.className = "hint";
+      attemptsEl.textContent = "0";
+      historyEl.textContent = "-";
+
+      // 🧑‍🎓 မှတ်ချက်: စမ်းသပ်ရ လွယ်အောင် console မှာ ပြတယ်
+      console.log("အဖြေ:", secret);
+    }
+
+    // ============================================
+    // ၃။ စစ်ဆေး
+    // ============================================
+    function checkGuess() {
+      if (isOver) {
+        hintEl.textContent = "ဂိမ်း ပြီးသွားပြီ။ \"အသစ် စ\" ကို နှိပ်ပါ။";
+        return;
+      }
+
+      let value = guessInput.value;
+
+      if (value === "") {
+        hintEl.textContent = "ဂဏန်း ထည့်ပါ";
+        return;
+      }
+
+      let guess = Number(value);
+
+      if (guess < 1 || guess > 100) {
+        hintEl.textContent = "၁ ကနေ ၁၀၀ အတွင်း ထည့်ပါ";
+        return;
+      }
+
+      attempts++;
+      attemptsEl.textContent = attempts;
+
+      history.push(guess);
+      historyEl.textContent = history.join(", ");
+
+      // ---- အဖြေ စစ် ----
+      if (guess === secret) {
+        hintEl.textContent = `🎉 မှန်တယ်! ${attempts} ချက်နဲ့ ရပြီ`;
+        hintEl.className = "hint win";
+        isOver = true;
+        return;
+      }
+
+      // ⚠️ ဒီနေရာကို သတိထား — အရင်က ပြောင်းပြန် ရေးမိတတ်တယ်
+      if (guess < secret) {
+        hintEl.textContent = "ပိုကြီးတဲ့ ဂဏန်း ဖြစ်တယ် ⬆️";
+      } else {
+        hintEl.textContent = "ပိုသေးတဲ့ ဂဏန်း ဖြစ်တယ် ⬇️";
+      }
+
+      // ၇ ချက် ပြည့်ရင် ရှုံး
+      if (attempts >= 7) {
+        hintEl.textContent = `😢 မရတော့ဘူး။ အဖြေက ${secret}`;
+        hintEl.className = "hint lose";
+        isOver = true;
+      }
+
+      guessInput.value = "";
+      guessInput.focus();
+    }
+
+    // ============================================
+    // ၄။ Event
+    // ============================================
+    document.getElementById("check").addEventListener("click", checkGuess);
+
+    document.getElementById("reset").addEventListener("click", startGame);
+
+    guessInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        checkGuess();
+      }
+    });
+
+    startGame();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async 01 — Timers</title>
+</head>
+<body>
+
+  <h1>Async 01 — setTimeout &amp; setInterval</h1>
+
+  <p>
+    <button id="start">စတင်</button>
+    <button id="stop">ရပ်</button>
+  </p>
+
+  <p>နာရီ: <span id="clock">-</span></p>
+  <p>အချိန်: <span id="countdown">10</span></p>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ setTimeout — တစ်ခါ လုပ်
+    // ============================================
+    show("စတယ်");
+
+    setTimeout(() => {
+      show("၂ စက္ကန့် နောက် (setTimeout)");
+    }, 2000);
+
+    show("ဒါက setTimeout မတိုင်ခင် run");
+
+    // 🧑‍🎓 မှတ်ချက်: setTimeout က စောင့်မနေဘူး။
+    // နောက်စာကြောင်းတွေ ဆက် run ပြီး ၂ စက္ကန့်နောက်မှ ပြန်လာလုပ်တယ်။
+
+    // ============================================
+    // ၂။ setTimeout ကို ရပ်
+    // ============================================
+    let timerId = setTimeout(() => {
+      show("ဒါက မပေါ်ရဘူး");
+    }, 5000);
+
+    // မလိုတော့ရင် ရပ်
+    clearTimeout(timerId);
+
+    // ============================================
+    // ၃။ setInterval — ထပ်ခါ ထပ်ခါ
+    // ============================================
+    let seconds = 10;
+    let countdownEl = document.getElementById("countdown");
+    let intervalId = null;
+
+    function tick() {
+      seconds--;
+      countdownEl.textContent = seconds;
+
+      if (seconds <= 0) {
+        clearInterval(intervalId);
+        show("အချိန် ကုန်ပြီ");
+      }
+    }
+
+    // ============================================
+    // ၄။ နာရီ
+    // ============================================
+    let clockEl = document.getElementById("clock");
+
+    function updateClock() {
+      let now = new Date();
+
+      let h = String(now.getHours()).padStart(2, "0");
+      let m = String(now.getMinutes()).padStart(2, "0");
+      let s = String(now.getSeconds()).padStart(2, "0");
+
+      clockEl.textContent = `${h}:${m}:${s}`;
+    }
+
+    updateClock();
+    let clockId = setInterval(updateClock, 1000);
+
+    // ============================================
+    // ၅။ Button တွေ
+    // ============================================
+    document.getElementById("start").addEventListener("click", () => {
+      // အဟောင်း ရှိနေရင် အရင် ရပ်
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+      }
+
+      seconds = 10;
+      countdownEl.textContent = seconds;
+
+      intervalId = setInterval(tick, 1000);
+      show("countdown စတယ်");
+    });
+
+    document.getElementById("stop").addEventListener("click", () => {
+      clearInterval(intervalId);
+      intervalId = null;
+      show("countdown ရပ်တယ်");
+    });
+
+    // ============================================
+    // ၆။ စာမျက်နှာ ပိတ်ရင် timer ရပ်
+    // ============================================
+    window.addEventListener("beforeunload", () => {
+      clearInterval(clockId);
+      clearInterval(intervalId);
+    });
+
+    // ============================================
+    // ၇။ လက်တွေ့ — toast message
+    // ============================================
+    function showToast(text, ms = 2000) {
+      let toast = document.createElement("div");
+      toast.textContent = text;
+      toast.style.cssText = "position:fixed;bottom:20px;right:20px;background:#111;color:#fff;padding:10px 16px;border-radius:8px;";
+      document.body.append(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, ms);
+    }
+
+    showToast("ဒီစာသားက ၂ စက္ကန့်နောက် ပျောက်မယ်");
+  </script>
+
+</body>
+</html>

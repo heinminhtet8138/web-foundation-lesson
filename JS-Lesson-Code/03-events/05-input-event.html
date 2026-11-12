@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Event</title>
+</head>
+<body>
+
+    <h1>Live Input Example</h1>
+
+    <!-- User စာရိုက်မယ့် Input -->
+    <input type="text" id="username"
+           placeholder="Enter your name">
+
+    <!-- ရိုက်ထားတဲ့စာကို ပြမယ့်နေရာ -->
+    <h2 id="result"></h2>
+
+    <!-- Character အရေအတွက်ပြမယ့်နေရာ -->
+    <p id="charCount">Characters: 0</p>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const username = document.getElementById("username");
+        const result = document.getElementById("result");
+        const charCount = document.getElementById("charCount");
+
+        // Input ထဲမှာ စာရိုက်တိုင်း အလုပ်လုပ်ခြင်း
+        username.addEventListener("input", function() {
+
+            // Input ထဲက Value ကို ရယူခြင်း
+            const value = username.value;
+
+            // ရိုက်ထားတဲ့စာကို ပြသခြင်း
+            result.textContent = "Hello " + value;
+
+            // Character အရေအတွက်ကို တွက်ချက်ခြင်း
+            charCount.textContent = "Characters: " + value.length;
+
+        });
+
+        // ရှင်းပြရန်
+        // - input က စာရိုက်တိုင်း အလုပ်လုပ်တယ်။
+        // - username.value က Input ထဲက စာသားကို ရယူတယ်။
+        // - value.length က စာလုံးအရေအတွက်ကို တွက်တယ်။
+        // - textContent နဲ့ Result ကို HTML မှာ ပြတယ်။
+
+    </script>
+
+</body>
+</html>

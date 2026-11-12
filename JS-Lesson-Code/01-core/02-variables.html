@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02 — Variables</title>
+</head>
+<body>
+
+  <h1>02 — Variables (တန်ဖိုး သိမ်းတဲ့ သေတ္တာ)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ (F12 / Cmd+Option+J)</p>
+
+  <script>
+    // ============================================
+    // ၁။ let — ပြောင်းလဲနိုင်တဲ့ တန်ဖိုး
+    // ============================================
+    let name = "Aung Aung";
+    let age = 20;
+
+    console.log(name);   // Aung Aung
+    console.log(age);    // 20
+
+    // တန်ဖိုး ပြောင်း
+    name = "Su Su";
+    age = age + 1;
+
+    console.log(name);   // Su Su
+    console.log(age);    // 21
+
+    // ============================================
+    // ၂။ const — တစ်ခါ သတ်မှတ်ပြီး မပြောင်းရ
+    // ============================================
+    const PI = 3.14;
+    console.log(PI);
+
+    // PI = 3.15;   // ❌ TypeError: Assignment to constant variable
+
+    // ============================================
+    // ၃။ var — ရှေးဟောင်း နည်းလမ်း
+    // ============================================
+    // ဒီနေ့ခေတ် code မှာ var ကို မသုံးတော့ပါ။
+    // let / const ကို သုံးပါ။
+    var oldStyle = "var က ရှေးဟောင်း";
+    console.log(oldStyle);
+
+    // ============================================
+    // ၄။ Scope (နယ်ပယ်)
+    // ============================================
+    // let / const က { } block ထဲမှာပဲ ရတယ်
+    // var က block အပြင်မှာပါ ရတယ်
+    if (true) {
+      let insideLet = "block ထဲမှာပဲ ရတယ်";
+      var insideVar = "block အပြင်မှာလည်း ရတယ်";
+
+      console.log(insideLet);
+    }
+
+    // console.log(insideLet);   // ❌ ReferenceError
+    console.log(insideVar);      // ✅ ရတယ်
+
+    // ============================================
+    // ၅။ အမည် ပေးတဲ့ စည်းမျဉ်း
+    // ============================================
+    let userName = "camelCase ကို သုံးပါ";
+    let totalPrice = 15000;
+    let isLogin = false;
+
+    console.log(userName, totalPrice, isLogin);
+
+    // let 1name = "မရဘူး";    // ❌ ဂဏန်းနဲ့ မစရ
+    // let my-name = "မရဘူး";   // ❌ - မပါရ
+    // let let = "မရဘူး";       // ❌ keyword ကို မသုံးရ
+
+    // ============================================
+    // ၆။ တစ်ကြောင်းတည်း ကြေညာ
+    // ============================================
+    let a = 1, b = 2, c = 3;
+    console.log(a, b, c);
+  </script>
+
+</body>
+</html>

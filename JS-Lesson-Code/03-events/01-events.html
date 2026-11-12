@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Storage</title>
+</head>
+<body>
+
+    <h1>Web Storage</h1>
+
+    <!--
+        STEP 1: JavaScript Variable နဲ့ Data သိမ်းဆည်းခြင်း
+
+        ပထမဆုံး JavaScript Variable ထဲမှာ Data သိမ်းကြည့်ပါမယ်။
+
+        Page ကို Reload လုပ်လိုက်တဲ့အခါ Variable ရဲ့ Value
+        ပြန်စတင်သွားတာကို စမ်းသပ်ကြည့်မှာဖြစ်ပါတယ်။
+    -->
+
+    <h2>1. JavaScript Variable</h2>
+
+    <input type="text" id="nameInput" placeholder="Enter your name">
+
+    <button id="saveButton">Save Name</button>
+
+    <button id="showButton">Show Name</button>
+
+    <p id="result"></p>
+
+    <script>
+        // Data ကို ယာယီသိမ်းဖို့ Variable တည်ဆောက်ခြင်း
+        let userName = "";
+
+        // HTML Element တွေကို ရယူခြင်း
+        const nameInput = document.getElementById("nameInput");
+        const saveButton = document.getElementById("saveButton");
+        const showButton = document.getElementById("showButton");
+        const result = document.getElementById("result");
+
+        // Save Name Button ကို Click လုပ်တဲ့အခါ
+        saveButton.addEventListener("click", function () {
+
+            // Input ထဲက Value ကို Variable ထဲသိမ်းခြင်း
+            userName = nameInput.value;
+
+            result.textContent = "Name saved successfully!";
+        });
+
+        // Show Name Button ကို Click လုပ်တဲ့အခါ
+        showButton.addEventListener("click", function () {
+
+            // Variable ထဲက Data ကို ပြသခြင်း
+            result.textContent = "Hello, " + userName;
+        });
+    </script>
+
+    <hr>
+
+    <!--
+        STEP 2: Web Storage အမျိုးအစားများကို လက်တွေ့စမ်းသပ်ခြင်း
+
+        Web Storage မှာ အဓိကအားဖြင့် ၂ မျိုးရှိပါတယ်။
+
+        1. LocalStorage
+           Browser ကို ပိတ်ပြီး ပြန်ဖွင့်တဲ့အခါမှာလည်း
+           Data ကို ဆက်လက်သိမ်းဆည်းထားနိုင်ပါတယ်။
+
+        2. SessionStorage
+           လက်ရှိ Tab Session အတွင်းမှာပဲ Data ကို
+           သိမ်းဆည်းထားနိုင်ပါတယ်။
+
+        ဒီအပိုင်းမှာတော့ Web Storage အမျိုးအစားတွေကို
+        Browser Developer Tools ထဲမှာ စမ်းသပ်ကြည့်နိုင်ပါတယ်။
+
+        Chrome မှာ -
+        1. Right Click နှိပ်ပါ။
+        2. Inspect ကို ရွေးပါ။
+        3. Application Tab ကို ဖွင့်ပါ။
+        4. Storage အောက်မှာ Local Storage နဲ့ Session Storage
+           ကို တွေ့နိုင်ပါတယ်။
+
+        ဒီအဆင့်မှာ Storage Method တွေကို မသုံးသေးပါဘူး။
+        နောက် Lesson တွေမှာ စတင်လေ့လာသွားမှာဖြစ်ပါတယ်။
+    -->
+
+    <h2>2. Browser Storage</h2>
+
+    <p>Open Developer Tools to inspect browser storage.</p>
+
+    <p>LocalStorage and SessionStorage</p>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11 — Error Handling</title>
+</head>
+<body>
+
+  <h1>11 — Error Handling (အမှား ကိုင်တွယ်ခြင်း)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ try / catch — အမှား ဖြစ်ရင် ဖမ်း
+    // ============================================
+    try {
+      console.log("စမ်းမယ်");
+
+      // မရှိတဲ့ function ကို ခေါ်
+      notExistFunction();
+    } catch (error) {
+      console.log("အမှား ဖြစ်သွားတယ်");
+      console.log(error.message);
+    }
+
+    // ဒီစာကြောင်း ဆက် run နိုင်တယ်
+    console.log("ဆက်လုပ်");
+
+    // ============================================
+    // ၂။ finally — အမှား ဖြစ်ဖြစ် မဖြစ်ဖြစ် လုပ်
+    // ============================================
+    try {
+      console.log("ဒေတာ ဖတ်မယ်");
+    } catch (error) {
+      console.log("အမှား");
+    } finally {
+      console.log("ပြီးဆုံး (အမြဲ run)");
+    }
+
+    // ============================================
+    // ၃။ throw — ကိုယ်တိုင် အမှား ပစ်
+    // ============================================
+    function checkAge(age) {
+      if (age < 0) {
+        throw new Error("အသက်က အနုတ် မဖြစ်ရဘူး");
+      }
+
+      if (age < 18) {
+        throw new Error("အသက် ၁၈ မပြည့်သေးဘူး");
+      }
+
+      return "ကြိုဆိုပါတယ်";
+    }
+
+    try {
+      console.log(checkAge(20));
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    try {
+      console.log(checkAge(15));
+    } catch (error) {
+      console.log(error.message);   // အသက် ၁၈ မပြည့်သေးဘူး
+    }
+
+    // ============================================
+    // ၄။ JSON.parse အမှား
+    // ============================================
+    try {
+      let data = JSON.parse("ဒါက JSON မဟုတ်ဘူး");
+      console.log(data);
+    } catch (error) {
+      console.log("JSON ဖတ်လို့ မရဘူး");
+    }
+
+    // ============================================
+    // ၅။ လက်တွေ့ — Form စစ်ဆေးခြင်း
+    // ============================================
+    function validateUser(user) {
+      if (!user.name || user.name.trim() === "") {
+        throw new Error("နာမည် ထည့်ပါ");
+      }
+
+      if (!user.email || !user.email.includes("@")) {
+        throw new Error("အီးမေးလ် မှန်ကန်အောင် ထည့်ပါ");
+      }
+
+      return "အောင်မြင်တယ်";
+    }
+
+    let users = [
+      { name: "", email: "a@mail.com" },
+      { name: "Aung", email: "aungmail.com" },
+      { name: "Aung", email: "aung@mail.com" }
+    ];
+
+    users.forEach((user) => {
+      try {
+        console.log(validateUser(user));
+      } catch (error) {
+        console.log("❌ " + error.message);
+      }
+    });
+
+    // ============================================
+    // ၆။ error object ထဲမှာ ဘာတွေ ပါလဲ
+    // ============================================
+    try {
+      null.name;
+    } catch (error) {
+      console.log(error.name);      // TypeError
+      console.log(error.message);   // Cannot read properties of null
+      console.log(error instanceof TypeError);   // true
+    }
+  </script>
+
+</body>
+</html>

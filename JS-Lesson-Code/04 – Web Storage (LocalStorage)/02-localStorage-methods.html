@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage Methods</title>
+</head>
+<body>
+
+    <h1>LocalStorage Methods</h1>
+
+    <h2>1. Save Data</h2>
+
+    <input type="text" id="nameInput" placeholder="Enter your name">
+
+    <button id="saveButton">Save Name</button>
+
+    <h2>2. Get Data</h2>
+
+    <button id="getButton">Get Name</button>
+
+    <p id="result"></p>
+
+    <hr>
+
+    <h2>3. Remove Data</h2>
+
+    <button id="removeButton">Remove Name</button>
+
+    <hr>
+
+    <h2>4. Clear All Data</h2>
+
+    <button id="clearButton">Clear All</button>
+
+    <p id="message"></p>
+
+    <script>
+        // STEP 1: HTML Element တွေကို ရယူခြင်း
+        const nameInput = document.getElementById("nameInput");
+        const saveButton = document.getElementById("saveButton");
+        const getButton = document.getElementById("getButton");
+        const removeButton = document.getElementById("removeButton");
+        const clearButton = document.getElementById("clearButton");
+        const result = document.getElementById("result");
+        const message = document.getElementById("message");
+
+
+        // STEP 2: setItem() ဖြင့် Data သိမ်းခြင်း
+        saveButton.addEventListener("click", function () {
+
+            // Input ထဲက Value ကို ရယူခြင်း
+            const userName = nameInput.value;
+
+            // LocalStorage ထဲမှာ Data သိမ်းခြင်း
+            localStorage.setItem("userName", userName);
+
+            message.textContent = "Name saved successfully!";
+        });
+
+
+        // STEP 3: getItem() ဖြင့် Data ပြန်ယူခြင်း
+        getButton.addEventListener("click", function () {
+
+            // LocalStorage ထဲက Data ကို ရယူခြင်း
+            const userName = localStorage.getItem("userName");
+
+            // Data ရှိ၊ မရှိ စစ်ဆေးခြင်း
+            if (userName !== null) {
+                result.textContent = "Hello, " + userName;
+            } else {
+                result.textContent = "No name found!";
+            }
+        });
+
+
+        // STEP 4: removeItem() ဖြင့် Data တစ်ခု ဖျက်ခြင်း
+        removeButton.addEventListener("click", function () {
+
+            // userName ဆိုတဲ့ Key ရဲ့ Data ကို ဖျက်ခြင်း
+            localStorage.removeItem("userName");
+
+            message.textContent = "Name removed successfully!";
+            result.textContent = "";
+        });
+
+
+        // STEP 5: clear() ဖြင့် Data အားလုံး ဖျက်ခြင်း
+        clearButton.addEventListener("click", function () {
+
+            // LocalStorage ထဲက Data အားလုံးကို ဖျက်ခြင်း
+            localStorage.clear();
+
+            message.textContent = "All data cleared!";
+            result.textContent = "";
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events 04 — Forms & Validation</title>
+</head>
+<body>
+
+  <h1>Events 04 — Form နဲ့ စစ်ဆေးခြင်း</h1>
+
+  <form id="form" novalidate>
+    <p>
+      <label>နာမည်</label><br>
+      <input id="name" type="text" placeholder="နာမည်">
+      <span id="name-error"></span>
+    </p>
+
+    <p>
+      <label>အီးမေးလ်</label><br>
+      <input id="email" type="text" placeholder="aung@mail.com">
+      <span id="email-error"></span>
+    </p>
+
+    <p>
+      <label>အသက်</label><br>
+      <input id="age" type="number" placeholder="20">
+      <span id="age-error"></span>
+    </p>
+
+    <p>
+      <label>သင်တန်း</label><br>
+      <select id="course">
+        <option value="">ရွေးပါ</option>
+        <option value="js">JavaScript</option>
+        <option value="jquery">jQuery</option>
+      </select>
+      <span id="course-error"></span>
+    </p>
+
+    <p>
+      <input id="agree" type="checkbox">
+      <label for="agree">စည်းကမ်း လက်ခံတယ်</label>
+      <span id="agree-error"></span>
+    </p>
+
+    <button type="submit">မှတ်ပုံတင်မယ်</button>
+  </form>
+
+  <p id="message"></p>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let form = document.getElementById("form");
+    let message = document.getElementById("message");
+
+    // ============================================
+    // ၁။ Error ပြ / ရှင်း
+    // ============================================
+    function setError(id, text) {
+      let errorSpan = document.getElementById(id + "-error");
+      errorSpan.textContent = text;
+      errorSpan.style.color = "red";
+    }
+
+    function clearErrors() {
+      ["name", "email", "age", "course", "agree"].forEach((id) => {
+        document.getElementById(id + "-error").textContent = "";
+      });
+
+      message.textContent = "";
+    }
+
+    // ============================================
+    // ၂။ စစ်ဆေးခြင်း
+    // ============================================
+    function validate() {
+      clearErrors();
+
+      let isValid = true;
+
+      // ---- နာမည် ----
+      let name = document.getElementById("name").value.trim();
+
+      if (name === "") {
+        setError("name", "နာမည် ထည့်ပါ");
+        isValid = false;
+      } else if (name.length < 3) {
+        setError("name", "အနည်းဆုံး ၃ လုံး ထည့်ပါ");
+        isValid = false;
+      }
+
+      // ---- အီးမေးလ် ----
+      let email = document.getElementById("email").value.trim();
+
+      if (email === "") {
+        setError("email", "အီးမေးလ် ထည့်ပါ");
+        isValid = false;
+      } else if (!email.includes("@")) {
+        setError("email", "@ ပါရမယ်");
+        isValid = false;
+      }
+
+      // ---- အသက် ----
+      let age = Number(document.getElementById("age").value);
+
+      if (document.getElementById("age").value === "") {
+        setError("age", "အသက် ထည့်ပါ");
+        isValid = false;
+      } else if (age < 1 || age > 100) {
+        setError("age", "အသက် ၁ ကနေ ၁၀၀ အတွင်း ထည့်ပါ");
+        isValid = false;
+      }
+
+      // ---- သင်တန်း ----
+      let course = document.getElementById("course").value;
+
+      if (course === "") {
+        setError("course", "သင်တန်း ရွေးပါ");
+        isValid = false;
+      }
+
+      // ---- စည်းကမ်း ----
+      let agree = document.getElementById("agree").checked;
+
+      if (!agree) {
+        setError("agree", "လက်ခံဖို့ လိုတယ်");
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // ============================================
+    // ၃။ submit မှာ စစ်
+    // ============================================
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!validate()) {
+        message.textContent = "❌ ပြင်ရန် ရှိတယ်";
+        message.style.color = "red";
+        return;
+      }
+
+      let data = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        age: Number(document.getElementById("age").value),
+        course: document.getElementById("course").value
+      };
+
+      show(JSON.stringify(data));
+
+      message.textContent = "✅ မှတ်ပုံတင်ပြီး";
+      message.style.color = "green";
+
+      form.reset();
+    });
+
+    // ============================================
+    // ၄။ ရိုက်နေတုန်း error ဖျောက်
+    // ============================================
+    ["name", "email", "age"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", () => {
+        document.getElementById(id + "-error").textContent = "";
+      });
+    });
+
+    // ============================================
+    // ၅။ Enter နဲ့ ပို့ခြင်း
+    // ============================================
+    document.getElementById("name").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        form.requestSubmit();
+      }
+    });
+
+    // ============================================
+    // ၆။ Select ပြောင်းတာနဲ့
+    // ============================================
+    document.getElementById("course").addEventListener("change", (event) => {
+      show("ရွေးတဲ့ သင်တန်း: " + event.target.value);
+    });
+  </script>
+
+</body>
+</html>

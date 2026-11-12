@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events 01 — addEventListener</title>
+</head>
+<body>
+
+  <h1>Events 01 — addEventListener</h1>
+
+  <button id="myButton">Btn0</button>
+  <button id="btn1">နှိပ်ပါ</button>
+  <button id="btn2">ဖျက်မယ်</button>
+
+  <input id="name-input" type="text" placeholder="နာမည် ရိုက်ပါ">
+  <select id="city">
+    <option value="">မြို့ ရွေးပါ</option>
+    <option value="yangon">Yangon</option>
+    <option value="mandalay">Mandalay</option>
+  </select>
+
+  <form id="form">
+    <input id="email" type="email" placeholder="အီးမေးလ်">
+    <button type="submit">ပို့မယ်</button>
+  </form>
+
+  <div id="hover-box" style="padding:12px;border:1px solid #ccc;">
+    ဒီအကွက်ထဲ ဝင်ကြည့်
+  </div>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // addEventListener() ဆိုတာ HTML Element တစ်ခုမှာ ဖြစ်ပေါ်လာမယ့် Event ကို စောင့်ကြည့်ပြီး အဲဒီ Event ဖြစ်လာတဲ့အခါ သတ်မှတ်ထားတဲ့ Function ကို အလုပ်လုပ်စေတဲ့ Method
+    // syntax
+    // element.addEventListener(event, function);
+    // အလုပ်လုပ်ပုံ 
+    // element – ဘယ် HTML Element ကို စောင့်ကြည့်မလဲ။
+    // event – ဘယ် Event ကို စောင့်ကြည့်မလဲ။
+    // function – Event ဖြစ်လာရင် ဘာလုပ်မလဲ။
+
+    const button = document.getElementById("myButton");
+
+    button.addEventListener("click", function() {
+        alert("Hello World!");
+    });
+
+    // button က ဘယ် Element ကို စောင့်ကြည့်မလဲ။ 
+    // "click" က Click Event ကို စောင့်ကြည့်မယ်။ 
+    // function() က Click ဖြစ်လာရင် အလုပ်လုပ်မယ်။ 
+    // alert() က Message ပြပေးမယ်။
+
+    // ============================================
+    // ၁။ click
+    // ============================================
+    let btn1 = document.getElementById("btn1");
+
+    btn1.addEventListener("click", function () {
+      show("နှိပ်လိုက်တယ်");
+    });
+
+    // ============================================
+    // ၂။ Arrow function နဲ့
+    // ============================================
+    btn1.addEventListener("click", () => {
+      show("ဒုတိယ listener လည်း အလုပ်လုပ်တယ်");
+    });
+
+    // listener နှစ်ခု တပ်လို့ ရတယ် — နှစ်ခုလုံး run
+
+    // ============================================
+    // ၃။ removeEventListener
+    // ============================================
+    // ⚠️ ဖျက်ချင်ရင် function ကို အမည်တပ်ထားရမယ်
+    function onBtn2Click() {
+      show("btn2 နှိပ်တယ်");
+    }
+
+    let btn2 = document.getElementById("btn2");
+    btn2.addEventListener("click", onBtn2Click);
+
+    // ၃ စက္ကန့်နောက် listener ဖျက်
+    setTimeout(() => {
+      btn2.removeEventListener("click", onBtn2Click);
+      show("btn2 listener ဖျက်ပြီး");
+    }, 3000);
+
+    // ============================================
+    // ၄။ input — စာရိုက်တိုင်း
+    // ============================================
+    let nameInput = document.getElementById("name-input");
+
+    nameInput.addEventListener("input", (event) => {
+      show("ရိုက်နေတယ်: " + event.target.value);
+    });
+
+    // ============================================
+    // ၅။ change — တန်ဖိုး ပြီးမှ ပြောင်း
+    // ============================================
+    let city = document.getElementById("city");
+
+    city.addEventListener("change", (event) => {
+      show("မြို့ ရွေးတယ်: " + event.target.value);
+    });
+
+    // ============================================
+    // ၆။ submit — form ပို့
+    // ============================================
+    let form = document.getElementById("form");
+
+    form.addEventListener("submit", (event) => {
+      // ⚠️ မထည့်ရင် စာမျက်နှာ reload ဖြစ်တယ်
+      event.preventDefault();
+
+      let email = document.getElementById("email").value;
+      show("ပို့မယ့် အီးမေးလ်: " + email);
+    });
+
+    // ============================================
+    // ၇။ mouseenter / mouseleave
+    // ============================================
+    let hoverBox = document.getElementById("hover-box");
+
+    hoverBox.addEventListener("mouseenter", () => {
+      hoverBox.style.background = "#dbeafe";
+    });
+
+    hoverBox.addEventListener("mouseleave", () => {
+      hoverBox.style.background = "";
+    });
+
+    // ============================================
+    // ၈။ keydown — ကီး နှိပ်
+    // ============================================
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        show("Escape နှိပ်တယ်");
+      }
+    });
+
+    // ============================================
+    // ၉။ load
+    // ============================================
+    window.addEventListener("load", () => {
+      show("စာမျက်နှာ အပြည့် ရောက်ပြီ");
+    });
+  </script>
+
+</body>
+</html>

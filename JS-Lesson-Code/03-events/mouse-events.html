@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse Events</title>
+
+    <style>
+        #myBox {
+            width: 300px;
+            height: 150px;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Mouse Events Example</h1>
+
+    <!-- Mouse ရွှေ့ကြည့်မယ့် Box -->
+    <div id="myBox">
+        Move Mouse Here
+    </div>
+
+    <!-- Event ဖြစ်ပေါ်မှုကို ပြမယ့်နေရာ -->
+    <p id="message">Waiting for mouse event...</p>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const box = document.getElementById("myBox");
+        const message = document.getElementById("message");
+
+        // Mouse က Box ပေါ်ရောက်လာတဲ့အခါ
+        box.addEventListener("mouseover", function() {
+
+            box.style.backgroundColor = "lightgreen";
+            message.textContent = "Mouse Over Event!";
+
+        });
+
+        // Mouse က Box အပေါ်မှ ထွက်သွားတဲ့အခါ
+        box.addEventListener("mouseout", function() {
+
+            box.style.backgroundColor = "lightgray";
+            message.textContent = "Mouse Out Event!";
+
+        });
+
+        // Mouse က Box အတွင်း ဝင်လာတဲ့အခါ
+        box.addEventListener("mouseenter", function() {
+
+            console.log("Mouse Enter!");
+
+        });
+
+        // Mouse က Box အပြင် ထွက်သွားတဲ့အခါ
+        box.addEventListener("mouseleave", function() {
+
+            console.log("Mouse Leave!");
+
+        });
+
+        // ရှင်းပြရန်
+        // - mouseover – Mouse က Element ပေါ်ရောက်လာတဲ့အခါ။
+        // - mouseout – Mouse က Element အပေါ်မှ ထွက်သွားတဲ့အခါ။
+        // - mouseenter – Mouse က Element အတွင်း ဝင်လာတဲ့အခါ။
+        // - mouseleave – Mouse က Element အပြင် ထွက်သွားတဲ့အခါ။
+        // mouseover နဲ့ mouseenter တို့ရဲ့ ကွာခြားချက်က Child Element တွေရှိတဲ့အခါ ပိုသိသာပါတယ်။ mouseover က Child Element ထဲဝင်တဲ့အခါလည်း ထပ်ဖြစ်နိုင်ပေမဲ့ mouseenter က ထပ်မဖြစ်ပါဘူး။
+
+    </script>
+
+</body>
+</html>

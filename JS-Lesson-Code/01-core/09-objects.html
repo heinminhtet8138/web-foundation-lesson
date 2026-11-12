@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>09 — Objects</title>
+</head>
+<body>
+
+  <h1>09 — Objects (အမည်တပ်ထားတဲ့ တန်ဖိုးများ)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ Object ဆောက်ခြင်း
+    // ============================================
+    let student = {
+      name: "Aung Aung",
+      age: 20,
+      city: "Yangon",
+      isStudent: true
+    };
+
+    console.log(student);
+
+    // ============================================
+    // ၂။ တန်ဖိုး ဖတ်ခြင်း
+    // ============================================
+    console.log(student.name);        // dot notation
+    console.log(student["age"]);      // bracket notation
+
+    // ============================================
+    // ၃။ တန်ဖိုး ပြင်ခြင်း / အသစ် ထည့်ခြင်း
+    // ============================================
+    student.age = 21;
+    student.phone = "09777214558";
+
+    console.log(student);
+
+    // ဖျက်ချင်ရင်
+    delete student.isStudent;
+    console.log(student);
+
+    // ============================================
+    // ၄။ Method — object ထဲက function
+    // ============================================
+    let user = {
+      name: "Su Su",
+
+      // method
+      greet: function () {
+        console.log("မင်္ဂလာပါ " + this.name);
+      },
+
+      // အတို ရေးနည်း
+      sayHi() {
+        console.log("Hi " + this.name);
+      }
+    };
+
+    user.greet();
+    user.sayHi();
+
+    // ⚠️ this က "ဒီ object" ကို ညွှန်တယ်
+
+    // ============================================
+    // ၅။ Object ထဲမှာ Object / Array
+    // ============================================
+    let order = {
+      id: 101,
+      customer: {
+        name: "Kyaw Kyaw",
+        phone: "09977123456"
+      },
+      items: ["Laptop", "Mouse"]
+    };
+
+    console.log(order.customer.name);   // Kyaw Kyaw
+    console.log(order.items[0]);        // Laptop
+
+    // ============================================
+    // ၆။ Object.keys / values / entries
+    // ============================================
+    let car = { brand: "Toyota", year: 2020, color: "white" };
+
+    console.log(Object.keys(car));      // ["brand", "year", "color"]
+    console.log(Object.values(car));    // ["Toyota", 2020, "white"]
+    console.log(Object.entries(car));   // [["brand", "Toyota"], ...]
+
+    // ============================================
+    // ၇။ Destructuring — တန်ဖိုး ဆွဲထုတ်
+    // ============================================
+    let { name, age } = student;
+    console.log(name, age);
+
+    // အမည် ပြောင်းပြီး ယူ
+    let { name: studentName } = student;
+    console.log(studentName);
+
+    // array destructuring
+    let [first, second] = ["a", "b", "c"];
+    console.log(first, second);
+
+    // ============================================
+    // ၈။ Spread (...) — ကူးယူ
+    // ============================================
+    let base = { a: 1, b: 2 };
+    let copy = { ...base, c: 3 };
+
+    console.log(copy);   // { a: 1, b: 2, c: 3 }
+
+    let arr1 = [1, 2];
+    let arr2 = [...arr1, 3, 4];
+    console.log(arr2);   // [1, 2, 3, 4]
+
+    // ============================================
+    // ၉။ Object ရဲ့ Array (အသုံးအများဆုံး)
+    // ============================================
+    let products = [
+      { id: 1, name: "Laptop", price: 2000 },
+      { id: 2, name: "Mouse", price: 50 }
+    ];
+
+    products.forEach((p) => {
+      console.log(p.name + " - " + p.price);
+    });
+
+    let cheap = products.filter((p) => p.price < 100);
+    console.log(cheap);   // Mouse ပဲ
+
+    // ============================================
+    // ၁၀။ JSON — string အဖြစ် ပြောင်း
+    // ============================================
+    let jsonText = JSON.stringify(student);
+    console.log(jsonText);
+
+    let backToObject = JSON.parse(jsonText);
+    console.log(backToObject.name);
+  </script>
+
+</body>
+</html>

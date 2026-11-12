@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation 01 — CSS Transition</title>
+
+  <style>
+    /* 👨‍🏫 ဆရာမှတ်ချက်:
+       Animation ကို CSS မှာ ရေးပြီး
+       JavaScript က class ကို လှန်ရုံပဲ လုပ်တယ်။ */
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background: #3b82f6;
+      border-radius: 8px;
+      margin-bottom: 12px;
+
+      /* transition: ဘယ် property၊ ဘယ်လောက်ကြာ၊ ဘယ်လို */
+      transition: width 0.4s ease, background 0.4s ease, transform 0.4s ease;
+    }
+
+    /* class ဝင်လာရင် တန်ဖိုး ပြောင်း */
+    .box.big {
+      width: 200px;
+      background: #16a34a;
+      transform: translateX(50px);
+    }
+
+    .box.round {
+      border-radius: 50%;
+    }
+
+    /* ကြာချိန် နှေးအောင် */
+    .box.slow {
+      transition-duration: 1.2s;
+    }
+
+    /* ချောချောလှပ် */
+    .box.bounce {
+      transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ---------- Keyframes ---------- */
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #e5e7eb;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    .pulse {
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #111;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- Hover ---------- */
+    .hover-btn {
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 8px;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .hover-btn:hover {
+      background: #e11d48;
+      transform: translateY(-3px);
+    }
+
+    .hover-btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Animation 01 — CSS Transition</h1>
+
+  <div id="box" class="box"></div>
+
+  <p>
+    <button id="toggle-btn">Toggle</button>
+    <button id="slow-btn">နှေး</button>
+    <button id="bounce-btn">Bounce</button>
+  </p>
+
+  <div class="spinner"></div>
+
+  <p>
+    <button id="toast-btn" class="hover-btn">Toast ပြ</button>
+  </p>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let box = document.getElementById("box");
+
+    // ============================================
+    // ၁။ class လှန်ရုံ
+    // ============================================
+    document.getElementById("toggle-btn").addEventListener("click", () => {
+      box.classList.toggle("big");
+      box.classList.toggle("round");
+
+      show("class: " + box.className);
+    });
+
+    // ============================================
+    // ၂။ ကြာချိန် ပြောင်း
+    // ============================================
+    document.getElementById("slow-btn").addEventListener("click", () => {
+      box.classList.toggle("slow");
+    });
+
+    // ============================================
+    // ၃။ Bounce
+    // ============================================
+    document.getElementById("bounce-btn").addEventListener("click", () => {
+      box.classList.toggle("bounce");
+      box.classList.toggle("big");
+    });
+
+    // ============================================
+    // ၄။ Toast — class နဲ့ ပြ / ဖျောက်
+    // ============================================
+    document.getElementById("toast-btn").addEventListener("click", () => {
+      let toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = "သိမ်းပြီးပါပြီ";
+      document.body.append(toast);
+
+      // 🧑‍🎓 မှတ်ချက်: element ကို DOM ထဲ ထည့်ပြီးမှ class ထည့်ရတယ်
+      // ဒါမှ transition အလုပ်လုပ်တယ်
+
+      requestAnimationFrame(() => {
+        toast.classList.add("show");
+      });
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+
+        // transition ပြီးမှ ဖျက်
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    });
+
+    // ============================================
+    // ၅။ transition ပြီးတာ သိချင်ရင်
+    // ============================================
+    box.addEventListener("transitionend", (event) => {
+      show("transition ပြီး: " + event.propertyName);
+    });
+
+    // ============================================
+    // ၆။ Animation ပြီးတာ သိချင်ရင်
+    // ============================================
+    let spinner = document.querySelector(".spinner");
+
+    spinner.addEventListener("animationiteration", () => {
+      // တစ်ပတ် ပြီးတိုင်း run
+    });
+
+    // ============================================
+    // ၇။ ⚠️ Transition မလုပ်တဲ့ အကြောင်းရင်းများ
+    // ============================================
+    // 1. display: none → block ပြောင်းရင် transition မလုပ်ဘူး
+    //    (opacity / visibility ကို သုံးပါ)
+    // 2. element က DOM ထဲ မဝင်သေးရင်
+    // 3. property က transition မလုပ်နိုင်တဲ့ အမျိုးအစား ဖြစ်ရင်
+    //    (ဥပမာ display, position)
+    // 4. transition ကို ဖျက်ထားရင်
+
+    show("စမ်းသပ်ရန် အဆင်သင့်");
+  </script>
+
+</body>
+</html>

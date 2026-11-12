@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation 02 — WAAPI</title>
+
+  <style>
+    .box {
+      width: 80px;
+      height: 80px;
+      background: #3b82f6;
+      border-radius: 8px;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Animation 02 — Web Animations API</h1>
+
+  <p>CSS မရေးဘဲ JavaScript ထဲကနေ animation လုပ်ခြင်း</p>
+
+  <div id="box" class="box"></div>
+
+  <p>
+    <button id="move-btn">ရွှေ့</button>
+    <button id="fade-btn">ဖျောက်</button>
+    <button id="shake-btn">လှုပ်</button>
+    <button id="stop-btn">ရပ်</button>
+  </p>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let box = document.getElementById("box");
+
+    // ============================================
+    // ၁။ element.animate(keyframes, options)
+    // ============================================
+    function moveBox() {
+      let animation = box.animate(
+        [
+          { transform: "translateX(0)" },
+          { transform: "translateX(300px)" }
+        ],
+        {
+          duration: 1000,          // မီလီစက္ကန့်
+          iterations: 1,
+          easing: "ease-in-out",
+          fill: "forwards"         // ပြီးရင် နောက်ဆုံး အနေအထား ထား
+        }
+      );
+
+      // 🧑‍🎓 မှတ်ချက်: finished က Promise ပြန်တယ်
+      animation.finished.then(() => {
+        show("ရွှေ့ပြီး");
+      });
+    }
+
+    // ============================================
+    // ၂။ တန်ဖိုး အဆင့်ဆင့်
+    // ============================================
+    function fadeBox() {
+      box.animate(
+        [
+          { opacity: 1, offset: 0 },
+          { opacity: 0.2, offset: 0.5 },
+          { opacity: 1, offset: 1 }
+        ],
+        {
+          duration: 1200,
+          easing: "linear"
+        }
+      );
+    }
+
+    // ============================================
+    // ၃။ လှုပ်ခြင်း
+    // ============================================
+    function shakeBox() {
+      box.animate(
+        [
+          { transform: "translateX(0)" },
+          { transform: "translateX(-12px)" },
+          { transform: "translateX(12px)" },
+          { transform: "translateX(-8px)" },
+          { transform: "translateX(8px)" },
+          { transform: "translateX(0)" }
+        ],
+        {
+          duration: 400,
+          iterations: 2
+        }
+      );
+    }
+
+    // ============================================
+    // ၄။ ရပ်ခြင်း
+    // ============================================
+    let current = null;
+
+    function startMove() {
+      current = box.animate(
+        [
+          { transform: "translateX(0) rotate(0deg)" },
+          { transform: "translateX(300px) rotate(180deg)" }
+        ],
+        {
+          duration: 2000,
+          iterations: Infinity,
+          direction: "alternate"
+        }
+      );
+    }
+
+    // ============================================
+    // ၅။ Button တွေ
+    // ============================================
+    document.getElementById("move-btn").addEventListener("click", moveBox);
+    document.getElementById("fade-btn").addEventListener("click", fadeBox);
+    document.getElementById("shake-btn").addEventListener("click", shakeBox);
+
+    document.getElementById("stop-btn").addEventListener("click", () => {
+      // လက်ရှိ animation အားလုံး ရပ်
+      box.getAnimations().forEach((animation) => {
+        animation.cancel();
+      });
+
+      show("animation ရပ်ပြီး");
+    });
+
+    // ============================================
+    // ၆။ Play / Pause / Reverse
+    // ============================================
+    function demoControls() {
+      let animation = box.animate(
+        [{ transform: "scale(1)" }, { transform: "scale(1.5)" }],
+        { duration: 1000, iterations: Infinity, direction: "alternate" }
+      );
+
+      // animation.pause();
+      // animation.play();
+      // animation.reverse();
+      // animation.finish();
+      // animation.cancel();
+
+      // animation.playbackRate = 0.5;   // နှေးအောင်
+      // animation.playbackRate = 2;     // မြန်အောင်
+
+      return animation;
+    }
+
+    // ============================================
+    // ၇။ CSS နဲ့ ဘာကွာလဲ
+    // ============================================
+    // CSS transition/keyframes
+    //   + ရေးရ လွယ်၊ performance ကောင်း
+    //   - JS ကနေ အခြေအနေ ထိန်းရ ခက်
+    //
+    // WAAPI
+    //   + JS ကနေ ထိန်းလို့ ရ (pause, reverse, playbackRate)
+    //   + finished Promise ရ
+    //   - နည်းနည်း ရှည်
+    //
+    // 🧑‍🎓 မှတ်ချက်: ရိုးရိုး animation ဆို CSS ကို ဦးစားပေးပါ။
+
+    show("WAAPI အဆင်သင့်");
+  </script>
+
+</body>
+</html>

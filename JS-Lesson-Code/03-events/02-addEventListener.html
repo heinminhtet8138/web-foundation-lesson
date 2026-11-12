@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addEventListener</title>
+</head>
+<body>
+
+    <h1>addEventListener Example</h1>
+
+    <button id="myButton">Click Me</button>
+
+    <p id="message">Waiting for click...</p>
+
+    <script>
+        // addEventListener() ဆိုတာ HTML Element တစ်ခုမှာ ဖြစ်ပေါ်လာမယ့် Event ကို စောင့်ကြည့်ပြီး အဲဒီ Event ဖြစ်လာတဲ့အခါ သတ်မှတ်ထားတဲ့ Function ကို အလုပ်လုပ်စေတဲ့ Method
+        // syntax
+        // element.addEventListener(event, function);
+        // အလုပ်လုပ်ပုံ 
+        // element – ဘယ် HTML Element ကို စောင့်ကြည့်မလဲ။
+        // event – ဘယ် Event ကို စောင့်ကြည့်မလဲ။
+        // function – Event ဖြစ်လာရင် ဘာလုပ်မလဲ။
+
+        // HTML ထဲက Button ကို ရှာယူခြင်း
+        const button = document.getElementById("myButton");
+
+        // HTML ထဲက Paragraph ကို ရှာယူခြင်း
+        const message = document.getElementById("message");
+
+        // Button မှာ Click Event ကို စောင့်ကြည့်ခြင်း
+        button.addEventListener("click", function() {
+
+            // Click လုပ်တဲ့အခါ အလုပ်လုပ်မယ့် Code
+            message.textContent = "Hello HeinLearn!";
+
+        });
+
+    </script>
+
+</body>
+</html>

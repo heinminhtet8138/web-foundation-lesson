@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Event Object</title>
+</head>
+<body>
+
+    <h1>JavaScript Event Object</h1>
+
+
+    <!-- ======================================= -->
+    <!-- STEP 1: Mouse Event အတွက် HTML ရေးခြင်း -->
+    <!-- ======================================= -->
+
+    <h2>1. Mouse Event</h2>
+
+    <!-- Button နှစ်ခုကို Parent Div ထဲမှာ ထည့်ထားခြင်း -->
+    <div id="parent">
+
+        <p>Parent Element</p>
+
+        <button id="btnOne">Button One</button>
+
+        <button id="btnTwo">Button Two</button>
+
+    </div>
+
+
+    <!-- =========================================== -->
+    <!-- STEP 2: Keyboard Event အတွက် HTML ရေးခြင်း -->
+    <!-- =========================================== -->
+
+    <h2>2. Keyboard Event</h2>
+
+    <!-- Keyboard နဲ့ စာရိုက်ဖို့ Input တစ်ခု ဖန်တီးခြင်း -->
+    <input
+        type="text"
+        id="username"
+        placeholder="Press any key"
+    >
+
+
+    <!-- =========================================== -->
+    <!-- STEP 3: Result ပြသဖို့ HTML ရေးခြင်း -->
+    <!-- =========================================== -->
+
+    <!-- Event ဖြစ်ပေါ်လာတဲ့အခါ ရရှိလာတဲ့ အချက်အလက်တွေကို ပြသမယ့်နေရာ -->
+    <h2>Event Information</h2>
+
+    <div id="result">Waiting for event...</div>
+
+
+    <script>
+
+        // ============================================
+        // STEP 4: HTML Element တွေကို ရှာယူခြင်း
+        // ============================================
+
+        // Parent Div Element ကို ရှာယူခြင်း
+        const parent = document.getElementById("parent");
+
+        // Input Element ကို ရှာယူခြင်း
+        const username = document.getElementById("username");
+
+        // Result Div Element ကို ရှာယူခြင်း
+        const result = document.getElementById("result");
+
+
+        // ============================================
+        // STEP 5: Mouse Event Object
+        // ============================================
+
+        // Parent Element မှာ Click Event Listener တပ်ခြင်း
+        parent.addEventListener("click", function(event) {
+
+            // ဒီ Function ထဲက event ဆိုတာ
+            // Browser က ပေးပို့လာတဲ့ Event Object ဖြစ်တယ်။
+            // Event Object ထဲမှာ ဖြစ်ပေါ်လာတဲ့ Event နဲ့
+            // သက်ဆိုင်တဲ့ အချက်အလက်တွေ ပါဝင်တယ်။
+
+
+            // ========================================
+            // STEP 6: event.type
+            // ========================================
+
+            // ဖြစ်ပေါ်လာတဲ့ Event အမျိုးအစားကို ရယူခြင်း
+            // ဒီနေရာမှာ Button ကို Click လုပ်တဲ့အတွက်
+            // Output က "click" ဖြစ်မယ်။
+
+            const eventType = event.type;
+
+
+            // ========================================
+            // STEP 7: event.target
+            // ========================================
+
+            // Event စတင်ဖြစ်ပေါ်စေတဲ့ မူလ Element ကို ရယူခြင်း
+            // Button One ကို Click လုပ်ရင် Button One ကို ရမယ်။
+            // Button Two ကို Click လုပ်ရင် Button Two ကို ရမယ်။
+
+            const targetElement = event.target;
+
+
+            // ========================================
+            // STEP 8: event.currentTarget
+            // ========================================
+
+            // Event Listener တပ်ထားတဲ့ Element ကို ရယူခြင်း
+            // ဒီမှာ Parent Div မှာ Listener တပ်ထားတဲ့အတွက်
+            // Parent Div ကို ပြန်ရရှိမယ်။
+
+            const currentElement = event.currentTarget;
+
+
+            // ========================================
+            // STEP 9: Event Information ကို ပြသခြင်း
+            // ========================================
+
+            // ရရှိလာတဲ့ အချက်အလက်တွေကို Page ပေါ်မှာ ပြသခြင်း
+
+            result.textContent =
+
+                "Mouse Event Information\n\n" +
+
+                "Event Type: " + eventType + "\n" +
+
+                "Target ID: " + targetElement.id + "\n" +
+
+                "Target Text: " + targetElement.textContent.trim() + "\n" +
+
+                "Current Target ID: " + currentElement.id;
+
+        });
+
+
+        // ============================================
+        // STEP 10: Keyboard Event Object
+        // ============================================
+
+        // Input ထဲမှာ Keyboard Key တစ်ခုခု နှိပ်တဲ့အခါ
+        // ဒီ Function က အလုပ်လုပ်မယ်။
+
+        username.addEventListener("keydown", function(event) {
+
+
+            // ========================================
+            // STEP 11: event.key
+            // ========================================
+
+            // နှိပ်လိုက်တဲ့ Keyboard Key ကို ရယူခြင်း
+            // ဥပမာ - a, Enter, Backspace, ArrowUp
+
+            const key = event.key;
+
+
+            // ========================================
+            // STEP 12: event.code
+            // ========================================
+
+            // Keyboard ပေါ်က Physical Key ရဲ့ Code ကို ရယူခြင်း
+            // ဥပမာ - KeyA, Enter, Backspace, ArrowUp
+
+            const code = event.code;
+
+
+            // ========================================
+            // STEP 13: event.type
+            // ========================================
+
+            // ဖြစ်ပေါ်လာတဲ့ Event အမျိုးအစားကို ရယူခြင်း
+            // ဒီနေရာမှာ Output က "keydown" ဖြစ်မယ်။
+
+            const type = event.type;
+
+
+            // ========================================
+            // STEP 14: Keyboard Information ပြသခြင်း
+            // ========================================
+
+            // ရရှိလာတဲ့ အချက်အလက်တွေကို Page ပေါ်မှာ ပြသခြင်း
+
+            result.textContent =
+
+                "Keyboard Event Information\n\n" +
+
+                "Event Type: " + type + "\n" +
+
+                "Key: " + key + "\n" +
+
+                "Code: " + code;
+
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Events</title>
+
+    <style>
+        body {
+            height: 2000px;
+            font-family: Arial;
+        }
+
+        #topBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Browser Events Example</h1>
+
+    <p id="message">Waiting...</p>
+
+    <p id="scrollInfo">Scroll Position: 0</p>
+
+    <p id="resizeInfo">Window Width: 0</p>
+
+    <!-- အပေါ်ဆုံးကို ပြန်သွားမယ့် Button -->
+    <button id="topBtn">Back To Top</button>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const message = document.getElementById("message");
+        const scrollInfo = document.getElementById("scrollInfo");
+        const resizeInfo = document.getElementById("resizeInfo");
+        const topBtn = document.getElementById("topBtn");
+
+        // Page နဲ့ Resource တွေ Load ပြီးတဲ့အခါ
+        window.addEventListener("load", function() {
+
+            message.textContent = "Website Loaded Successfully!";
+
+        });
+
+        // Page ကို Scroll လုပ်တဲ့အခါ
+        window.addEventListener("scroll", function() {
+
+            // Scroll လုပ်ထားတဲ့ အကွာအဝေးကို ရယူခြင်း
+            const scrollPosition = window.scrollY;
+
+            scrollInfo.textContent =
+                "Scroll Position: " + scrollPosition;
+
+            // 300px ကျော် Scroll လုပ်ရင် Button ပြခြင်း
+            if (scrollPosition > 300) {
+
+                topBtn.style.display = "block";
+
+            } else {
+
+                topBtn.style.display = "none";
+
+            }
+
+        });
+
+        // Browser Window အရွယ်အစား ပြောင်းတဲ့အခါ
+        window.addEventListener("resize", function() {
+
+            // Window ရဲ့ Width ကို ရယူခြင်း
+            resizeInfo.textContent =
+                "Window Width: " + window.innerWidth;
+
+        });
+
+        // Back To Top Button ကို Click လုပ်တဲ့အခါ
+        topBtn.addEventListener("click", function() {
+
+            // Page ကို အပေါ်ဆုံးပြန်ပို့ခြင်း
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+        // ရှင်းပြရန်
+        // - load – Page နဲ့ Resource တွေ Load ပြီးတဲ့အခါ။
+        // - scroll – Page ကို Scroll လုပ်တဲ့အခါ။
+        // - resize – Browser Window အရွယ်အစား ပြောင်းတဲ့အခါ။
+        // - window.scrollY – Scroll လုပ်ထားတဲ့ ဒေါင်လိုက်အကွာအဝေး။
+        // - window.innerWidth – Browser ရဲ့ အတွင်းပိုင်း Width။
+        // - window.scrollTo() – သတ်မှတ်ထားတဲ့ နေရာကို Scroll လုပ်ပေးတယ်။
+
+    </script>
+
+</body>
+</html>

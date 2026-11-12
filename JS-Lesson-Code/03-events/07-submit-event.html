@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Event</title>
+</head>
+<body>
+
+    <h1>Registration Form</h1>
+
+    <!-- Registration Form -->
+    <form id="registerForm">
+
+        <!-- Name Input -->
+        <label>Username</label>
+        <input type="text" id="username"
+               placeholder="Enter username" required>
+
+        <br><br>
+
+        <!-- Email Input -->
+        <label>Email</label>
+        <input type="email" id="email"
+               placeholder="Enter email" required>
+
+        <br><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Register</button>
+
+    </form>
+
+    <!-- Result ပြမယ့်နေရာ -->
+    <p id="result"></p>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const form = document.getElementById("registerForm");
+        const username = document.getElementById("username");
+        const email = document.getElementById("email");
+        const result = document.getElementById("result");
+
+        // Form ကို Submit လုပ်တဲ့အခါ
+        form.addEventListener("submit", function(event) {
+
+            // Browser ရဲ့ ပုံမှန် Form Submit လုပ်ဆောင်ချက်ကို တားဆီးခြင်း
+            event.preventDefault();
+
+            // Input တွေထဲက Value ကို ရယူခြင်း
+            const nameValue = username.value;
+            const emailValue = email.value;
+
+            // ရလာတဲ့ Data တွေကို ပြသခြင်း
+            result.textContent = "Welcome " + nameValue +
+                                 "! Your email is " + emailValue;
+
+        });
+
+        // ရှင်းပြရန်
+        // - submit – Form ကို Submit လုပ်တဲ့အခါ ဖြစ်ပေါ်တဲ့ Event။
+        // - event.preventDefault() – Browser ရဲ့ Default Submit Behavior ကို တားဆီးပေးတယ်။
+        // - required – Input ကို မဖြည့်ဘဲ Submit လုပ်လို့မရအောင် Browser က စစ်ဆေးပေးတယ်။
+        // - username.value – User ရိုက်ထားတဲ့ Username ကို ရယူတယ်။
+        // - email.value – User ရိုက်ထားတဲ့ Email ကို ရယူတယ်။
+
+    </script>
+
+</body>
+</html>

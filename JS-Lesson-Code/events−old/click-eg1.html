@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click Counter</title>
+</head>
+<body>
+
+    <h1>My Click Counter</h1>
+
+    <h2 id="count">0</h2>
+
+    <button id="clickBtn">Click Me</button>
+    <button id="resetBtn">Reset</button>
+
+    <script>
+        let count = 0;
+
+        const countText = document.getElementById("count");
+        const clickBtn = document.getElementById("clickBtn");
+        const resetBtn = document.getElementById("resetBtn");
+
+        // Click Event
+        //textContent နဲ့ innerText ဆိုတာ HTML Element တစ်ခုအတွင်းမှာရှိတဲ့ စာသားတွေကို ရယူဖို့ (Get) နဲ့ ပြောင်းလဲဖို့ (Set) အသုံးပြုတဲ့ Properties တွေဖြစ်
+        // textContent = Text အားလုံး 
+        // innerText = မြင်ရတဲ့ Text 
+        // innerHTML = HTML Markup အပါအဝင် Content
+        clickBtn.addEventListener("click", function() {
+            count++;
+            countText.textContent = count;
+        });
+
+        // Reset Event
+        resetBtn.addEventListener("click", function() {
+            count = 0;
+            countText.textContent = count;
+        });
+
+        // အလုပ်လုပ်ပုံ 
+        // clickBtn – ဘယ် Button ကို စောင့်ကြည့်မလဲ။ 
+        // addEventListener – Event ကို စောင့်ကြည့်မယ်။ 
+        // click – Click လုပ်တဲ့အခါ။ 
+        // function – Click လုပ်လိုက်ရင် အလုပ်လုပ်မယ့် Code။ 
+        // count++ – Count ကို ၁ တိုးမယ်။ 
+        // textContent – HTML ထဲက စာသားကို ပြောင်းမယ်။
+
+    </script>
+
+</body>
+</html>

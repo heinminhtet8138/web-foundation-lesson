@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration CRUD</title>
+</head>
+<body>
+
+    <h1>Student Registration</h1>
+
+    <!-- Add Student Form -->
+    <div id="add_student">
+        <h2>Add Student</h2>
+
+        <input type="text" id="name" placeholder="Student Name">
+        <input type="email" id="email" placeholder="Student Email">
+        <input type="tel" id="phone" placeholder="Student Phone">
+
+        <select id="year">
+            <option value="">Select Year</option>
+            <option value="First Year">First Year</option>
+            <option value="Second Year">Second Year</option>
+            <option value="Third Year">Third Year</option>
+        </select>
+
+        <button type="button" id="add_btn">Add Student</button>
+    </div>
+
+
+    <!-- Update Student Form -->
+    <div id="edit_student" hidden>
+        <h2>Update Student</h2>
+
+        <input type="hidden" id="edit_key">
+
+        <input type="text" id="edit_name" placeholder="Student Name">
+        <input type="email" id="edit_email" placeholder="Student Email">
+        <input type="tel" id="edit_phone" placeholder="Student Phone">
+
+        <select id="edit_year">
+            <option value="">Select Year</option>
+            <option value="First Year">First Year</option>
+            <option value="Second Year">Second Year</option>
+            <option value="Third Year">Third Year</option>
+        </select>
+
+        <button type="button" id="update_btn">Update Student</button>
+        <button type="button" id="cancel_btn">Cancel</button>
+    </div>
+
+
+    <!-- Student Table -->
+    <h2>Student List</h2>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Year</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="tbody"></tbody>
+    </table>
+
+
+    <script>
+
+        // HTML Element များကို ရယူခြင်း
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+        const yearInput = document.getElementById("year");
+
+        const addBtn = document.getElementById("add_btn");
+        const updateBtn = document.getElementById("update_btn");
+        const cancelBtn = document.getElementById("cancel_btn");
+
+        const tbody = document.getElementById("tbody");
+
+        const addForm = document.getElementById("add_student");
+        const editForm = document.getElementById("edit_student");
+
+        const editKey = document.getElementById("edit_key");
+        const editName = document.getElementById("edit_name");
+        const editEmail = document.getElementById("edit_email");
+        const editPhone = document.getElementById("edit_phone");
+        const editYear = document.getElementById("edit_year");
+
+
+        // LocalStorage ထဲမှ Student Data များကို ရယူခြင်း
+        function getStudents() {
+
+            const studentString = localStorage.getItem("students");
+
+            if (studentString === null) {
+                return [];
+            }
+
+            return JSON.parse(studentString);
+        }
+
+
+        // Student Data များကို LocalStorage ထဲ သိမ်းခြင်း
+        function saveStudents(students) {
+
+            const studentString = JSON.stringify(students);
+
+            localStorage.setItem("students", studentString);
+        }
+
+
+        // Student Data များကို Table ထဲ ပြသခြင်း (READ)
+        function getData() {
+
+            const students = getStudents();
+
+            // Table အဟောင်းများကို ရှင်းခြင်း
+            tbody.innerHTML = "";
+
+            // Student မရှိသေးလျှင် Message ပြခြင်း
+            if (students.length === 0) {
+
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6">No students registered yet.</td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+            // Student တစ်ယောက်ချင်းစီကို Table ထဲ ထည့်ခြင်း
+            students.forEach((student, index) => {
+
+                // Table Row တစ်ခုလုံးကို ဖန်တီးခြင်း
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${student.stu_name}</td>
+                    <td>${student.stu_email}</td>
+                    <td>${student.stu_phone}</td>
+                    <td>${student.stu_year}</td>
+                    <td>
+                        <button class="edit" data-key="${index}">Edit</button>
+                        <button class="delete" data-key="${index}">Delete</button>
+                    </td>
+                `;
+
+                // Table Row ကို Table Body ထဲ ထည့်ခြင်း
+                tbody.appendChild(tr);
+
+            });
+
+        }
+
+
+        // Add Student Button ကို နှိပ်သည့်အခါ (CREATE)
+        addBtn.addEventListener("click", function () {
+
+            // Input ထဲမှ Data များကို ရယူခြင်း
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const year = yearInput.value;
+
+            // Input များကို စစ်ဆေးခြင်း
+            if (!name || !email || !phone || !year) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Student Object တစ်ခု ဖန်တီးခြင်း
+            const student = {
+                stu_name: name,
+                stu_email: email,
+                stu_phone: phone,
+                stu_year: year
+            };
+
+            // လက်ရှိ Student Data များကို ရယူခြင်း
+            const students = getStudents();
+
+            // Student အသစ်ကို Array ထဲ ထည့်ခြင်း
+            students.push(student);
+
+            // LocalStorage ထဲ သိမ်းခြင်း
+            saveStudents(students);
+
+            // Input များကို ရှင်းခြင်း
+            nameInput.value = "";
+            emailInput.value = "";
+            phoneInput.value = "";
+            yearInput.value = "";
+
+            // Table ကို ပြန်လည်ပြသခြင်း
+            getData();
+
+        });
+
+
+        // Edit နှင့် Delete Button များကို Click လုပ်ခြင်း
+        tbody.addEventListener("click", function (event) {
+
+            // Click လုပ်ထားသော Element ကို ရယူခြင်း
+            const target = event.target;
+
+            // Edit Button ကို နှိပ်လျှင်
+            if (target.classList.contains("edit")) {
+
+                // Edit လုပ်မည့် Student ၏ Index ကို ရယူခြင်း
+                const key = Number(target.dataset.key);
+
+                const students = getStudents();
+
+                const student = students[key];
+
+                // Add Form ကို ဖျောက်ပြီး Edit Form ကို ပြခြင်း
+                addForm.hidden = true;
+                editForm.hidden = false;
+
+                // ရှိပြီးသား Student Data များကို Input ထဲ ထည့်ခြင်း
+                editKey.value = key;
+                editName.value = student.stu_name;
+                editEmail.value = student.stu_email;
+                editPhone.value = student.stu_phone;
+                editYear.value = student.stu_year;
+
+            }
+
+
+            // Delete Button ကို နှိပ်လျှင်
+            if (target.classList.contains("delete")) {
+
+                // Delete လုပ်မည့် Student ၏ Index ကို ရယူခြင်း
+                const key = Number(target.dataset.key);
+
+                // User ကို အတည်ပြုမေးခြင်း
+                const confirmDelete = confirm("Are you sure you want to delete?");
+
+                if (confirmDelete) {
+
+                    const students = getStudents();
+
+                    // သက်ဆိုင်ရာ Student ကို Array ထဲမှ ဖယ်ရှားခြင်း
+                    students.splice(key, 1);
+
+                    // LocalStorage ထဲ ပြန်သိမ်းခြင်း
+                    saveStudents(students);
+
+                    // Table ကို ပြန်လည်ပြသခြင်း
+                    getData();
+
+                }
+
+            }
+
+        });
+
+
+        // Update Student Button ကို နှိပ်သည့်အခါ (UPDATE)
+        updateBtn.addEventListener("click", function () {
+
+            // Edit Form ထဲမှ Data များကို ရယူခြင်း
+            const key = Number(editKey.value);
+
+            const name = editName.value.trim();
+            const email = editEmail.value.trim();
+            const phone = editPhone.value.trim();
+            const year = editYear.value;
+
+            // Input များကို စစ်ဆေးခြင်း
+            if (!name || !email || !phone || !year) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const students = getStudents();
+
+            // ရှိပြီးသား Student Data များကို ပြင်ဆင်ခြင်း
+            students[key].stu_name = name;
+            students[key].stu_email = email;
+            students[key].stu_phone = phone;
+            students[key].stu_year = year;
+
+            // LocalStorage ထဲ ပြန်သိမ်းခြင်း
+            saveStudents(students);
+
+            // Add Form ကို ပြန်ပြပြီး Edit Form ကို ဖျောက်ခြင်း
+            editForm.hidden = true;
+            addForm.hidden = false;
+
+            // Table ကို ပြန်လည်ပြသခြင်း
+            getData();
+
+        });
+
+
+        // Cancel Button ကို နှိပ်သည့်အခါ
+        cancelBtn.addEventListener("click", function () {
+
+            // Edit Form ကို ဖျောက်ပြီး Add Form ကို ပြန်ပြခြင်း
+            editForm.hidden = true;
+            addForm.hidden = false;
+
+        });
+
+
+        // Page စဖွင့်သည့်အခါ Student Data များကို ပြသခြင်း
+        getData();
+
+    </script>
+
+</body>
+</html>

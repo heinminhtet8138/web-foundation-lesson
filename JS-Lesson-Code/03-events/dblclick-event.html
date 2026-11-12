@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Double Click Event</title>
+</head>
+<body>
+
+    <h1>Double Click Example</h1>
+
+    <!-- Double Click လုပ်မယ့် Text -->
+    <h2 id="title">Double Click Me!</h2>
+
+    <script>
+
+        // HTML ထဲက Heading ကို ရှာယူခြင်း
+        const title = document.getElementById("title");
+
+        // Heading ကို Double Click လုပ်တဲ့အခါ
+        title.addEventListener("dblclick", function() {
+
+            // Heading ရဲ့ စာသားကို ပြောင်းလဲခြင်း
+            title.textContent = "You Double Clicked!";
+
+        });
+
+        // ရှင်းပြရန်
+        // - dblclick က Double Click Event ဖြစ်တယ်။
+        // - click နဲ့ မတူဘဲ Mouse ကို နှစ်ချက်နှိပ်မှ အလုပ်လုပ်တယ်။
+        // - ဒီ Example မှာ Heading ကို Double Click လုပ်ရင် စာသားပြောင်းသွားမယ်။
+
+    </script>
+
+</body>
+</html>

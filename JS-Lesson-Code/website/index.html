@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS ပညာရေး — မြန်မာလို JavaScript သင်ခန်းစာများ</title>
+  <meta name="description" content="JavaScript သင်ခန်းစာ ၃၃ ခုကို မြန်မာလို အဆင့်ဆင့် ရှင်းလင်းချက်၊ ကုဒ်မျဉ်းကြောင်း ရှင်းလင်းချက်နဲ့ diagram တွေနဲ့ လေ့လာနိုင်တဲ့ site။">
+  <meta name="theme-color" content="#4f46e5">
+
+  <script>
+    // Dark mode ကို စာမျက်နှာ မပေါ်ခင် အရင် သတ်မှတ် (flash မဖြစ်အောင်)
+    try {
+      var savedTheme = localStorage.getItem("jsl-theme");
+      if (savedTheme === "dark") document.documentElement.classList.add("dark");
+    } catch (e) {}
+  </script>
+
+  <script src="assets/vendor/tailwind-3.4.16.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans Myanmar"', '"Myanmar Text"', '"Myanmar Sangam MN"', '"Pyidaungsu"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"SFMono-Regular"', 'Consolas', '"Liberation Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: "#eef2ff", 100: "#e0e7ff", 200: "#c7d2fe", 300: "#a5b4fc",
+              400: "#818cf8", 500: "#6366f1", 600: "#4f46e5", 700: "#4338ca",
+              800: "#3730a3", 900: "#312e81"
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+
+<body class="font-sans antialiased">
+
+  <div id="reading-progress" aria-hidden="true"></div>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="header-inner">
+      <button id="menu-btn" class="icon-btn lg:hidden" aria-label="ဘေးဘား ဖွင့်">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <a href="#/" class="brand-link" aria-label="ပင်မစာမျက်နှာ">
+        <span class="brand-mark">{ }</span>
+        <span class="brand-text">
+          <strong>JS ပညာရေး</strong>
+          <small>မြန်မာလို ရှင်းလင်းချက်</small>
+        </span>
+      </a>
+
+      <button id="search-open" class="search-trigger" aria-label="သင်ခန်းစာ ရှာဖွေ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span>သင်ခန်းစာ ရှာဖွေ…</span>
+        <kbd>⌘ K</kbd>
+      </button>
+
+      <div class="header-actions">
+        <a href="#/cheatsheet" class="header-link hidden sm:inline-flex">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+          <span>အမြန်ကိုးကား</span>
+        </a>
+
+        <div class="progress-pill" id="header-progress" title="ပြီးစီးမှု">
+          <svg viewBox="0 0 36 36" class="progress-ring" aria-hidden="true">
+            <circle class="ring-bg" cx="18" cy="18" r="15"></circle>
+            <circle class="ring-fill" id="ring-fill" cx="18" cy="18" r="15"></circle>
+          </svg>
+          <span id="progress-text">0/33</span>
+        </div>
+
+        <button id="theme-btn" class="icon-btn" aria-label="အရောင် ပြောင်း">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SHELL ================= -->
+  <div class="shell">
+    <div id="sidebar-overlay" class="sidebar-overlay" hidden></div>
+
+    <aside id="sidebar" class="sidebar" aria-label="သင်ရိုး ဘေးဘား">
+      <div class="sidebar-scroll">
+        <nav class="side-nav">
+          <a href="#/" class="side-link side-home" data-route="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg>
+            <span>ပင်မစာမျက်နှာ</span>
+          </a>
+          <a href="#/cheatsheet" class="side-link" data-route="cheatsheet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+            <span>အမြန်ကိုးကား</span>
+          </a>
+        </nav>
+
+        <div class="side-label">သင်ရိုး</div>
+        <div id="side-chapters"></div>
+      </div>
+
+      <div class="side-footer">
+        <div class="side-progress-top">
+          <span>သင်တန်း ပြီးစီးမှု</span>
+          <strong id="side-progress-text">0%</strong>
+        </div>
+        <div class="bar"><span id="side-progress-bar"></span></div>
+        <p id="side-progress-note">သင်ခန်းစာ 0 / 33 ပြီးပါပြီ</p>
+      </div>
+    </aside>
+
+    <main id="app" class="app-main" tabindex="-1"></main>
+  </div>
+
+  <!-- ================= SEARCH MODAL ================= -->
+  <div id="search-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-search></div>
+    <div class="search-box" role="dialog" aria-modal="true" aria-label="သင်ခန်းစာ ရှာဖွေ">
+      <div class="search-input-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search-input" type="search" placeholder="ဥပမာ — loop, addEventListener, cart…" autocomplete="off" spellcheck="false">
+        <kbd>Esc</kbd>
+      </div>
+      <div id="search-results" class="search-results"></div>
+      <div class="search-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> ရွေး</span>
+        <span><kbd>Enter</kbd> ဖွင့်</span>
+        <span class="ml-auto">သင်ခန်းစာ ၃၃ ခု</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <div style="padding:40px;text-align:center;font-family:sans-serif">
+      ဒီ site ကို ကြည့်ရန် JavaScript ကို ဖွင့်ထားဖို့ လိုပါတယ်။
+    </div>
+  </noscript>
+
+  <!-- ================= DATA ================= -->
+  <script src="assets/data/curriculum.js"></script>
+  <script src="assets/data/core-a.js"></script>
+  <script src="assets/data/core-b.js"></script>
+  <script src="assets/data/dom.js"></script>
+  <script src="assets/data/events.js"></script>
+  <script src="assets/data/async-storage.js"></script>
+  <script src="assets/data/animation.js"></script>
+  <script src="assets/data/practice.js"></script>
+  <script src="assets/data/reference.js"></script>
+
+  <!-- ================= ENGINE ================= -->
+  <script src="assets/diagrams.js?v=2"></script>
+  <script src="assets/app.js?v=2"></script>
+</body>
+</html>

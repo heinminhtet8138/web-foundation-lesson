@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice 01 — မြှောက်စား လေ့ကျင့်ခန်း</title>
+
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input { width: 80px; padding: 6px; }
+    button { padding: 6px 14px; cursor: pointer; }
+    table { border-collapse: collapse; margin-top: 12px; }
+    td, th { border: 1px solid #ccc; padding: 6px 12px; text-align: center; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+
+  <h1>မြှောက်စား လေ့ကျင့်ခန်း</h1>
+
+  <p>
+    ဂဏန်း ထည့်ပါ:
+    <input id="num" type="number" value="2" min="1" max="20">
+    <button id="run">မြှောက်မယ်</button>
+  </p>
+
+  <p id="error" class="error"></p>
+
+  <div id="result"></div>
+
+  <script>
+    let input = document.getElementById("num");
+    let runBtn = document.getElementById("run");
+    let errorEl = document.getElementById("error");
+    let resultEl = document.getElementById("result");
+
+    // ============================================
+    // ၁။ စစ်ဆေး
+    // ============================================
+    function validate(value) {
+      if (value === "") {
+        return "ဂဏန်း ထည့်ပါ";
+      }
+
+      let num = Number(value);
+
+      if (Number.isNaN(num)) {
+        return "ဂဏန်း မှန်ကန်အောင် ထည့်ပါ";
+      }
+
+      if (num < 1 || num > 20) {
+        return "၁ ကနေ ၂၀ အတွင်း ထည့်ပါ";
+      }
+
+      return "";
+    }
+
+    // ============================================
+    // ၂။ မြှောက်စား ဇယား ဆောက်
+    // ============================================
+    function createTable(num) {
+      let table = document.createElement("table");
+
+      let head = document.createElement("tr");
+
+      let th1 = document.createElement("th");
+      th1.textContent = "ပုဒ်";
+
+      let th2 = document.createElement("th");
+      th2.textContent = "တွက်ချက်မှု";
+
+      let th3 = document.createElement("th");
+      th3.textContent = "ရလဒ်";
+
+      head.append(th1, th2, th3);
+      table.append(head);
+
+      for (let i = 1; i <= 12; i++) {
+        let row = document.createElement("tr");
+
+        let td1 = document.createElement("td");
+        td1.textContent = i;
+
+        let td2 = document.createElement("td");
+        td2.textContent = `${num} × ${i}`;
+
+        let td3 = document.createElement("td");
+        td3.textContent = num * i;
+
+        row.append(td1, td2, td3);
+        table.append(row);
+      }
+
+      return table;
+    }
+
+    // ============================================
+    // ၃။ ပြ
+    // ============================================
+    function render() {
+      let error = validate(input.value);
+
+      errorEl.textContent = error;
+      resultEl.innerHTML = "";
+
+      if (error !== "") {
+        return;
+      }
+
+      let num = Number(input.value);
+      resultEl.append(createTable(num));
+    }
+
+    // ============================================
+    // ၄။ Event
+    // ============================================
+    runBtn.addEventListener("click", render);
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        render();
+      }
+    });
+
+    // စာမျက်နှာ ဖွင့်တာနဲ့ တစ်ခါ ပြ
+    render();
+  </script>
+
+</body>
+</html>

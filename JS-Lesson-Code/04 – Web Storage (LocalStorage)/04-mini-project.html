@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo CRUD with LocalStorage</title>
+</head>
+<body>
+
+    <h1>Todo List</h1>
+
+    <!-- Todo အသစ်ထည့်ရန်၊ ပြင်ဆင်ရန် -->
+    <input type="text" id="todoInput" placeholder="Enter a task">
+
+    <button id="saveButton">Add Todo</button>
+
+    <h2>My Tasks</h2>
+
+    <!-- Todo List ပြသရန် -->
+    <ul id="todoList"></ul>
+
+
+    <script>
+
+        // STEP 1: HTML Element တွေကို ရယူခြင်း
+        const todoInput = document.getElementById("todoInput");
+        const saveButton = document.getElementById("saveButton");
+        const todoList = document.getElementById("todoList");
+
+
+        // STEP 2: LocalStorage ထဲက Data တွေကို ရယူခြင်း
+        // Data မရှိသေးရင် Empty Array အသုံးပြုမယ်။
+        let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+
+        // Edit လုပ်နေတဲ့ Todo ရဲ့ Index ကို သိမ်းဖို့ Variable
+        let editIndex = null;
+
+
+        // STEP 3: Read - Todo List တွေကို ပြသခြင်း
+        function displayTodos() {
+
+            // အရင် List တွေကို ရှင်းခြင်း
+            todoList.innerHTML = "";
+
+            // Array ထဲက Data တွေကို Loop ပတ်ခြင်း
+            todos.forEach(function (todo, index) {
+
+                const li = document.createElement("li");
+
+                // Todo Text ပြသခြင်း
+                const span = document.createElement("span");
+                span.textContent = todo;
+
+                // Edit Button ဖန်တီးခြင်း
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+
+                // Delete Button ဖန်တီးခြင်း
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+
+
+                // STEP 4: Update - Edit Button
+                editButton.addEventListener("click", function () {
+
+                    // ရွေးထားတဲ့ Todo ကို Input ထဲ ပြန်ထည့်ခြင်း
+                    todoInput.value = todo;
+
+                    // Edit လုပ်မယ့် Index ကို သိမ်းခြင်း
+                    editIndex = index;
+
+                    // Button စာသားပြောင်းခြင်း
+                    saveButton.textContent = "Update Todo";
+                });
+
+
+                // STEP 5: Delete - Delete Button
+                deleteButton.addEventListener("click", function () {
+
+                    // သက်ဆိုင်ရာ Todo ကို Array ထဲက ဖျက်ခြင်း
+                    todos.splice(index, 1);
+
+                    // LocalStorage ထဲ Data ပြန်သိမ်းခြင်း
+                    localStorage.setItem("todos", JSON.stringify(todos));
+
+                    // List ကို ပြန်ပြသခြင်း
+                    displayTodos();
+                });
+
+
+                // Element တွေကို ပေါင်းစပ်ခြင်း
+                li.appendChild(span);
+                li.appendChild(editButton);
+                li.appendChild(deleteButton);
+
+                todoList.appendChild(li);
+            });
+        }
+
+
+        // STEP 6: Create & Update - Save Button
+        saveButton.addEventListener("click", function () {
+
+            // Input ထဲက Value ကို ရယူခြင်း
+            const todo = todoInput.value.trim();
+
+            // Input အလွတ်ဖြစ်နေရင် ရပ်ခြင်း
+            if (todo === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+
+            // Update - ရှိပြီးသား Todo ကို ပြင်ဆင်ခြင်း
+            if (editIndex !== null) {
+
+                todos[editIndex] = todo;
+
+                editIndex = null;
+
+                saveButton.textContent = "Add Todo";
+
+            } else {
+
+                // Create - Todo အသစ်ထည့်ခြင်း
+                todos.push(todo);
+            }
+
+
+            // LocalStorage ထဲ Data သိမ်းခြင်း
+            localStorage.setItem("todos", JSON.stringify(todos));
+
+            // Input ကို ရှင်းခြင်း
+            todoInput.value = "";
+
+            // List ကို ပြန်ပြသခြင်း
+            displayTodos();
+        });
+
+
+        // STEP 7: Page စဖွင့်တဲ့အခါ Data တွေ ပြသခြင်း
+        displayTodos();
+
+    </script>
+
+</body>
+</html>

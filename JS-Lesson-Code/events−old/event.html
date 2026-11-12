@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button id="myButton">Click Me</button>
+
+    <script>
+        //Event 
+        // Event ဆိုတာ User က Website ပေါ်မှာ တစ်ခုခုလုပ်ဆောင်လိုက်တဲ့အခါ ဖြစ်ပေါ်လာတဲ့ ဖြစ်ရပ် (Action) ကိုဆိုလို 
+        // JavaScript မှာ တွေ့ရများတဲ့ Events များ
+        // Event	အဓိပ္ပာယ်
+        // click	Element ကို Click လုပ်ခြင်း
+        // dblclick	နှစ်ချက် Click လုပ်ခြင်း
+        // mouseover	Mouse ကို Element ပေါ်တင်ခြင်း
+        // mouseout	Mouse ကို Element ပေါ်မှ ဖယ်ခြင်း
+        // keydown	Keyboard Key တစ်ခုနှိပ်ခြင်း
+        // keyup	Keyboard Key ကို လွှတ်ခြင်း
+        // input	Input ထဲမှာ စာရိုက်ခြင်း
+        // change	Input Value ပြောင်းလဲခြင်း
+        // submit	Form Submit လုပ်ခြင်း
+        // load	Page သို့မဟုတ် Resource Load ဖြစ်ခြင်း
+
+        const button = document.getElementById("myButton"); // button ကို select လုပ်
+        // getElementById() က HTML ထဲက Button ကို ရှာယူတယ်။
+        // addEventListener() က Event တစ်ခု ဖြစ်လာတာကို စောင့်ကြည့်တယ်။
+        // "click" က ဘယ် Event ကို စောင့်ကြည့်မလဲဆိုတာ သတ်မှတ်တယ်။
+        // function() ထဲက Code က Click ဖြစ်တဲ့အခါ အလုပ်လုပ်တယ်။
+        button.addEventListener("click", function () {
+            alert("Hello World!");
+        });
+
+
+        // Event နဲ့ Event Handler ဘာကွာလဲ။
+
+        // ဒီမှာ click က Event ဖြစ်ပြီး handleClick က Event Handler ဖြစ်ပါတယ်။
+        // Event handler ကို နာမည်ပေးရင် ရှေ့က handle ထည့်ပေးလေ့ရှိ 
+
+        button.addEventListener("click", handleClick);
+
+        function handleClick() {    
+            console.log("Button Clicked!");
+        }
+
+        // JavaScript မှာ Event တွေကို အသုံးပြုပြီး Website ကို Interactive ဖြစ်အောင် ပြုလုပ်နိုင်ပါတယ်။
+
+        // ဥပမာ -
+        // - Button နှိပ်ရင် Menu ပေါ်လာခြင်း
+        // - Form ဖြည့်ပြီး Submit လုပ်ခြင်း
+        // - Search Box မှာ စာရိုက်တာနဲ့ Search လုပ်ခြင်း
+        // - Image ကို Click လုပ်ရင် ပုံကြီးချဲ့ပြခြင်း
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>05 — Conditions</title>
+</head>
+<body>
+
+  <h1>05 — Conditions (အခြေအနေ စစ်ခြင်း)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ if — မှန်ရင် လုပ်
+    // ============================================
+    let age = 20;
+
+    if (age >= 18) {
+      console.log("အရွယ်ရောက်ပြီ");
+    }
+
+    // ============================================
+    // ၂။ if / else — မှန်ရင် တစ်ခု၊ မှားရင် တစ်ခု
+    // ============================================
+    let score = 45;
+
+    if (score >= 50) {
+      console.log("အောင်");
+    } else {
+      console.log("ကျ");
+    }
+
+    // ============================================
+    // ၃။ else if — အခြေအနေ အများ
+    // ============================================
+    function grade(mark) {
+      if (mark >= 80) {
+        return "A";
+      } else if (mark >= 60) {
+        return "B";
+      } else if (mark >= 40) {
+        return "C";
+      } else {
+        return "F";
+      }
+    }
+
+    console.log(grade(85));   // A
+    console.log(grade(65));   // B
+    console.log(grade(45));   // C
+    console.log(grade(20));   // F
+
+    // ============================================
+    // ၄။ Ternary (? :) — တိုတိုရေး
+    // ============================================
+    let isLogin = true;
+    console.log(isLogin ? "ကြိုဆိုပါတယ်" : "အရင် login လုပ်ပါ");
+
+    let n = 7;
+    console.log(n % 2 === 0 ? "စုံ" : "မ");
+
+    // ============================================
+    // ၅။ switch — တန်ဖိုး တိတိကျကျ စစ်
+    // ============================================
+    let day = 3;
+
+    switch (day) {
+      case 1:
+        console.log("တနင်္လာ");
+        break;
+      case 2:
+        console.log("အင်္ဂါ");
+        break;
+      case 3:
+        console.log("ဗုဒ္ဓဟူး");
+        break;
+      default:
+        console.log("အခြား ရက်");
+    }
+
+    // ⚠️ break မထည့်ရင် အောက်က case တွေ ဆက်ဆက်သွားတယ်
+
+    // ============================================
+    // ၆။ Truthy / Falsy
+    // ============================================
+    // အောက်ပါ တန်ဖိုးတွေက false လို သတ်မှတ်တယ်:
+    // false, 0, "", null, undefined, NaN
+
+    let name = "";
+
+    if (name) {
+      console.log("နာမည် ရှိတယ်");
+    } else {
+      console.log("နာမည် မရှိဘူး");
+    }
+
+    // ============================================
+    // ၇။ && နဲ့ တိုတိုရေး
+    // ============================================
+    let user = { name: "Aung", isAdmin: true };
+
+    if (user && user.isAdmin) {
+      console.log("Admin ဖြစ်တယ်");
+    }
+  </script>
+
+</body>
+</html>

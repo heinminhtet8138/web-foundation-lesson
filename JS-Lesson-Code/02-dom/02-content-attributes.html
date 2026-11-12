@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 02 — Content & Attributes</title>
+</head>
+<body>
+
+  <h1 id="title">DOM 02 — စာသားနဲ့ Attribute</h1>
+
+  <p id="text">မူလ စာသား</p>
+  <div id="html-box"></div>
+
+  <input id="name-input" type="text" placeholder="နာမည်">
+  <button id="btn" data-id="7" data-role="admin">Button</button>
+
+  <a id="link" href="https://example.com">Link</a>
+  <img id="photo" src="" alt="ဓာတ်ပုံ">
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ textContent — စာသား ဖတ် / ရေး
+    // ============================================
+    let text = document.getElementById("text");
+
+    show("မူလ: " + text.textContent);
+
+    text.textContent = "ပြောင်းလိုက်ပြီ";
+
+    show("အသစ်: " + text.textContent);
+
+    // ============================================
+    // ၂။ innerHTML — HTML ပါ ထည့်
+    // ============================================
+    let htmlBox = document.getElementById("html-box");
+
+    htmlBox.innerHTML = "<strong>Bold</strong> စာသား";
+
+    show("innerHTML: " + htmlBox.innerHTML);
+
+    // ⚠️ User ရိုက်တဲ့ စာသားကို innerHTML ထဲ မထည့်ပါနဲ့ (XSS)
+    // User စာသားအတွက် textContent ကို သုံးပါ
+
+    // ============================================
+    // ၃။ input ရဲ့ တန်ဖိုး
+    // ============================================
+    let input = document.getElementById("name-input");
+
+    input.value = "Aung Aung";
+    show("input value: " + input.value);
+
+    // ⚠️ input က textContent မဟုတ်ဘူး — value သုံးရတယ်
+    show("input textContent: '" + input.textContent + "'");
+
+    // ============================================
+    // ၄။ getAttribute / setAttribute
+    // ============================================
+    let link = document.getElementById("link");
+
+    show("href: " + link.getAttribute("href"));
+
+    link.setAttribute("href", "https://developer.mozilla.org");
+    link.setAttribute("target", "_blank");
+
+    show("href အသစ်: " + link.getAttribute("href"));
+
+    // ============================================
+    // ၅။ dataset — data-* attribute
+    // ============================================
+    let btn = document.getElementById("btn");
+
+    // HTML: data-id="7"  →  JS: dataset.id
+    show("data-id: " + btn.dataset.id);
+    show("data-role: " + btn.dataset.role);
+
+    // ပြင်ချင်ရင်
+    btn.dataset.id = "99";
+    show("data-id အသစ်: " + btn.dataset.id);
+
+    // ============================================
+    // ၆။ src ပြောင်းခြင်း
+    // ============================================
+    let photo = document.getElementById("photo");
+
+    // ဒီမှာ အင်တာနက် မလိုတဲ့ ပုံငယ် (SVG) ကို သုံးထားတယ်
+    photo.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%233b82f6'/%3E%3C/svg%3E";
+    photo.alt = "အပြာရောင် ပုံ";
+
+    show("img src: " + photo.getAttribute("src"));
+
+    // ============================================
+    // ၇။ attribute ဖျက်ခြင်း / ရှိမရှိ စစ်ခြင်း
+    // ============================================
+    show("target ရှိလား: " + link.hasAttribute("target"));
+
+    link.removeAttribute("target");
+    show("ဖျက်ပြီး target ရှိလား: " + link.hasAttribute("target"));
+
+    // ============================================
+    // ၈။ class ကို attribute အနေနဲ့ ဖတ်
+    // ============================================
+    show("btn class: '" + btn.className + "'");
+
+    btn.className = "primary big";
+    show("class အသစ်: " + btn.className);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>07 — Functions</title>
+</head>
+<body>
+
+  <h1>07 — Functions (လုပ်ငန်း တစ်ခုကို ခေါ်သုံးခြင်း)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ Function ကြေညာ
+    // ============================================
+    function greet() {
+      console.log("မင်္ဂလာပါ");
+    }
+
+    greet();   // ခေါ်သုံး
+    greet();
+
+    // ============================================
+    // ၂။ Parameter (လက်ခံတဲ့ တန်ဖိုး)
+    // ============================================
+    function sayHello(name) {
+      console.log("မင်္ဂလာပါ " + name);
+    }
+
+    sayHello("Aung Aung");
+    sayHello("Su Su");
+
+    // ============================================
+    // ၃။ return — ရလဒ် ပြန်ပေး
+    // ============================================
+    function add(a, b) {
+      return a + b;
+    }
+
+    let result = add(5, 3);
+    console.log(result);        // 8
+    console.log(add(10, 20));   // 30
+
+    // ⚠️ return ပြီးတာနဲ့ function က ရပ်တယ်
+    function test() {
+      return "ဒါက ပြန်ပေးတယ်";
+      console.log("ဒီစာကြောင်း မရောက်ဘူး");
+    }
+
+    console.log(test());
+
+    // ============================================
+    // ၄။ Default parameter
+    // ============================================
+    function welcome(name = "ဧည့်သည်") {
+      return "ကြိုဆိုပါတယ် " + name;
+    }
+
+    console.log(welcome());          // ကြိုဆိုပါတယ် ဧည့်သည်
+    console.log(welcome("Aung"));    // ကြိုဆိုပါတယ် Aung
+
+    // ============================================
+    // ၅။ Arrow function (=>)
+    // ============================================
+    const multiply = (a, b) => {
+      return a * b;
+    };
+
+    console.log(multiply(4, 5));   // 20
+
+    // တစ်ကြောင်းတည်း ဆိုရင် return မလိုဘူး
+    const square = (n) => n * n;
+    console.log(square(6));        // 36
+
+    // parameter တစ်ခုတည်း ဆိုရင် ( ) မလိုဘူး
+    const double = n => n * 2;
+    console.log(double(7));        // 14
+
+    // ============================================
+    // ၆။ Callback — function ကို ပေးပို့ခြင်း
+    // ============================================
+    function calculate(a, b, operation) {
+      return operation(a, b);
+    }
+
+    console.log(calculate(10, 5, add));              // 15
+    console.log(calculate(10, 5, (x, y) => x - y));  // 5
+    console.log(calculate(10, 5, (x, y) => x * y));  // 50
+
+    // ============================================
+    // ၇။ Function က function ပြန်ပေး
+    // ============================================
+    function makeCounter() {
+      let count = 0;
+
+      return function () {
+        count++;
+        return count;
+      };
+    }
+
+    const counter = makeCounter();
+    console.log(counter());   // 1
+    console.log(counter());   // 2
+    console.log(counter());   // 3
+
+    // ============================================
+    // ၈။ Scope
+    // ============================================
+    let globalVar = "အပြင်က";
+
+    function showScope() {
+      let localVar = "function ထဲက";
+
+      console.log(globalVar);   // ✅ ရတယ်
+      console.log(localVar);    // ✅ ရတယ်
+    }
+
+    showScope();
+    // console.log(localVar);     // ❌ မရဘူး
+  </script>
+
+</body>
+</html>

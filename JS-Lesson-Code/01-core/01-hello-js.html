@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01 — Hello JavaScript</title>
+</head>
+<body>
+
+  <h1 id="title">01 — Hello JavaScript</h1>
+  <p id="output"></p>
+
+  <!-- 👨‍🏫 ဆရာမှတ်ချက်:
+       script ကို body ရဲ့ အောက်ဆုံးမှာ ထားပါ။
+       HTML အားလုံး ဖတ်ပြီးမှ JavaScript run မယ်။ -->
+  <script>
+    // console.log() — ရလဒ်ကို Console ထဲမှာ ပြတယ်
+    // Windows: F12 | Mac: Cmd + Option + J
+    console.log("Hello JavaScript");
+
+    // ---- စာမျက်နှာပေါ်မှာ ပြချင်ရင် ----
+    // ၁။ element ကို အရင်ရှာ
+    let output = document.getElementById("output");
+
+    // ၂။ ပြီးမှ စာထည့်
+    output.textContent = "မင်္ဂလာပါ။ JavaScript စပြီ။";
+
+    // ---- တွက်ချက်မှု ----
+    console.log(2 + 3);
+    console.log(10 * 4);
+    console.log("ကျွန်တော်" + " " + "JavaScript လေ့လာနေတယ်");
+
+    // ⚠️ document.write() ကို မသုံးပါနဲ့
+    // စာမျက်နှာ တစ်ခုလုံးကို ဖျက်ပစ်နိုင်တယ်။
+  </script>
+
+</body>
+</html>

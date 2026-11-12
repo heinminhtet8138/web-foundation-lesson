@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Shop — ဈေးဝယ်ခြင်းတောင်း</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 👨‍🏫 ဆရာမှတ်ချက်: ဒီစာမျက်နှာက ဈေးဝယ်ခြင်းတောင်း (cart) ပါ။
+       index.html နဲ့ ဒီဖိုင် နှစ်ခုလုံးက script.js တစ်ခုတည်းကို သုံးတယ်။
+       ဒါကြောင့် cart ထဲ ထည့်တာ၊ ပြင်တာ၊ ဖျက်တာ အားလုံး တစ်နေရာတည်းမှာ ရှိတယ်။ -->
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">🛒 IT Shop</a>
+      <a class="cart-link" href="checkout.html" title="ဈေးဝယ်ခြင်းတောင်း">
+        🧺
+        <span class="badge" id="item-count">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 class="page-title">ဈေးဝယ်ခြင်းတောင်း</h1>
+
+    <!-- 🧑‍🎓 မှတ်ချက်: tbody (#cart-body) ကို script.js က အလိုအလျောက် ဖြည့်တယ်။
+         HTML ထဲမှာ row တွေ လက်နဲ့ ရေးထားတာ မဟုတ်ပါ။ -->
+    <table>
+      <thead>
+        <tr>
+          <th>စဉ်</th>
+          <th>ပစ္စည်း</th>
+          <th>ဈေးနှုန်း</th>
+          <th>အရေအတွက်</th>
+          <th>စုစုပေါင်း</th>
+          <th>ဖျက်</th>
+        </tr>
+      </thead>
+      <tbody id="cart-body"></tbody>
+    </table>
+
+    <div class="actions">
+      <a href="index.html" class="btn secondary">← ပစ္စည်း ဆက်ရွေးမယ်</a>
+
+      <div class="total">
+        စုစုပေါင်း: <span id="cart-total">0</span> MMK
+      </div>
+
+      <button class="btn" id="order-btn">မှာယူမယ် (Order Now)</button>
+    </div>
+
+    <!-- 👨‍🏫 ဆရာမှတ်ချက်: အောင်မြင်တဲ့ အခါ ဒီစာသားကို script.js က ပြတယ်။ -->
+    <p id="order-message" class="note"></p>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

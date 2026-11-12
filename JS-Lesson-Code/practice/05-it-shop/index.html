@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Shop — ပစ္စည်းများ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 👨‍🏫 ဆရာမှတ်ချက်: Navbar က မျက်နှာနှစ်ခုလုံးမှာ အတူတူပါ။
+       Cart badge (#item-count) ကို script.js က update လုပ်တယ်။ -->
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">🛒 IT Shop</a>
+      <a class="cart-link" href="checkout.html" title="ဈေးဝယ်ခြင်းတောင်း">
+        🧺
+        <span class="badge" id="item-count">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 class="page-title">ပစ္စည်းများ</h1>
+
+    <!-- 🧑‍🎓 မှတ်ချက်: button တစ်ခုစီမှာ data-id, data-name, data-price ပါတယ်။
+         script.js က dataset ကနေ ဒီတန်ဖိုးတွေ ယူမယ်။ -->
+
+    <div class="grid" id="product-grid">
+
+      <article class="card">
+        <img src="images/laptop.webp" alt="Laptop 1">
+        <div class="card-body">
+          <h3>Laptop 1</h3>
+          <p class="price">2,300,000 MMK</p>
+          <button class="btn add-to-cart" data-id="1" data-name="Laptop 1" data-price="2300000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/laptop1.webp" alt="Laptop 2">
+        <div class="card-body">
+          <h3>Laptop 2</h3>
+          <p class="price">2,000,000 MMK</p>
+          <button class="btn add-to-cart" data-id="2" data-name="Laptop 2" data-price="2000000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/laptop2.webp" alt="Laptop 3">
+        <div class="card-body">
+          <h3>Laptop 3</h3>
+          <p class="price">1,900,000 MMK</p>
+          <button class="btn add-to-cart" data-id="3" data-name="Laptop 3" data-price="1900000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/laptop3.webp" alt="Laptop 4">
+        <div class="card-body">
+          <h3>Laptop 4</h3>
+          <p class="price">1,850,000 MMK</p>
+          <button class="btn add-to-cart" data-id="4" data-name="Laptop 4" data-price="1850000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/ip14pro4.webp" alt="iPhone 1">
+        <div class="card-body">
+          <h3>iPhone 1</h3>
+          <p class="price">3,400,000 MMK</p>
+          <button class="btn add-to-cart" data-id="5" data-name="iPhone 1" data-price="3400000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/ip14pro.webp" alt="iPhone 2">
+        <div class="card-body">
+          <h3>iPhone 2</h3>
+          <p class="price">3,200,000 MMK</p>
+          <button class="btn add-to-cart" data-id="6" data-name="iPhone 2" data-price="3200000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/ip14pro1.webp" alt="iPhone 3">
+        <div class="card-body">
+          <h3>iPhone 3</h3>
+          <p class="price">3,100,000 MMK</p>
+          <button class="btn add-to-cart" data-id="7" data-name="iPhone 3" data-price="3100000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/ip14pro2.webp" alt="iPhone 4">
+        <div class="card-body">
+          <h3>iPhone 4</h3>
+          <p class="price">3,000,000 MMK</p>
+          <button class="btn add-to-cart" data-id="8" data-name="iPhone 4" data-price="3000000">
+            တောင်းထဲ ထည့်
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click Event</title>
+</head>
+<body>
+
+    <h1>Click Counter</h1>
+
+    <!-- Counter ပြမယ့်နေရာ -->
+    <h2 id="count">0</h2>
+
+    <!-- Counter တိုးစေမယ့် Button -->
+    <button id="increaseBtn">Increase</button>
+
+    <!-- Counter ကို သုညပြန်လုပ်မယ့် Button -->
+    <button id="resetBtn">Reset</button>
+
+    <script>
+
+        // Counter ရဲ့ မူလတန်ဖိုး
+        let count = 0;
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const countText = document.getElementById("count");
+        const increaseBtn = document.getElementById("increaseBtn");
+        const resetBtn = document.getElementById("resetBtn");
+
+        // Increase Button ကို Click လုပ်တဲ့အခါ
+        increaseBtn.addEventListener("click", function() {
+
+            // Counter ကို ၁ တိုးခြင်း
+            count++;
+
+            // HTML မှာ Counter တန်ဖိုးကို ပြောင်းပြခြင်း
+            countText.textContent = count;
+
+        });
+
+        // Reset Button ကို Click လုပ်တဲ့အခါ
+        resetBtn.addEventListener("click", function() {
+
+            // Counter ကို သုညပြန်ထားခြင်း
+            count = 0;
+
+            // HTML မှာ တန်ဖိုးကို ပြောင်းပြခြင်း
+            countText.textContent = count;
+
+        });
+
+        // ရှင်းပြရန်
+        // - let count = 0 က Counter ရဲ့ မူလတန်ဖိုး။
+        // - count++ က တန်ဖိုးကို ၁ တိုးပေးတယ်။
+        // - count = 0 က တန်ဖိုးကို သုညပြန်ထားတယ်။
+        // - textContent က HTML ထဲက စာသားကို ပြောင်းပေးတယ်။
+
+    </script>
+
+</body>
+</html>

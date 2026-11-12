@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 — Strings & Numbers</title>
+</head>
+<body>
+
+  <h1>10 — Strings &amp; Numbers</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ Template Literal (` `)
+    // ============================================
+    let name = "Aung Aung";
+    let age = 20;
+
+    console.log(`နာမည်: ${name}၊ အသက်: ${age}`);
+
+    // တွက်ချက်မှုလည်း ထည့်နိုင်တယ်
+    console.log(`${name} က နောက် ၅ နှစ်ဆို ${age + 5} နှစ်`);
+
+    // စာကြောင်း အများ
+    console.log(`စာကြောင်း ၁
+စာကြောင်း ၂`);
+
+    // ============================================
+    // ၂။ String Method
+    // ============================================
+    let text = "  Hello JavaScript  ";
+
+    console.log(text.length);              // 20 (space ပါ တွက်)
+    console.log(text.trim());              // "Hello JavaScript"
+    console.log(text.trim().toUpperCase()); // "HELLO JAVASCRIPT"
+    console.log(text.trim().toLowerCase()); // "hello javascript"
+
+    let word = "JavaScript";
+
+    console.log(word.charAt(0));           // J
+    console.log(word[0]);                  // J
+    console.log(word.indexOf("Script"));   // 4
+    console.log(word.includes("Java"));    // true
+    console.log(word.startsWith("Java"));  // true
+    console.log(word.endsWith("Script"));  // true
+
+    console.log(word.slice(0, 4));         // Java
+    console.log(word.replace("Java", "Type"));  // TypeScript
+
+    console.log("a,b,c".split(","));       // ["a", "b", "c"]
+    console.log("abc".split(""));          // ["a", "b", "c"]
+
+    console.log("ha".repeat(3));           // hahaha
+
+    // ============================================
+    // ၃။ Number
+    // ============================================
+    let num = 12.3456;
+
+    console.log(num.toFixed(2));           // "12.35"
+    console.log(Math.round(num));          // 12
+    console.log(Math.floor(num));          // 12
+    console.log(Math.ceil(num));           // 13
+    console.log(Math.max(10, 5, 30));      // 30
+    console.log(Math.min(10, 5, 30));      // 5
+    console.log(Math.abs(-7));             // 7
+    console.log(Math.random());            // 0 နဲ့ 1 ကြား
+
+    // ၁ ကနေ ၁၀ ကြား ကျပန်း ကိန်းပြည့်
+    let random = Math.floor(Math.random() * 10) + 1;
+    console.log(random);
+
+    // ============================================
+    // ၄။ String ↔ Number
+    // ============================================
+    let str = "123";
+
+    console.log(typeof str);               // string
+    console.log(Number(str));              // 123
+    console.log(parseInt("123px"));        // 123
+    console.log(parseFloat("12.5kg"));     // 12.5
+
+    console.log(Number("abc"));            // NaN (Not a Number)
+    console.log(isNaN(Number("abc")));     // true
+
+    let n = 456;
+    console.log(String(n));                // "456"
+    console.log(n.toString());             // "456"
+
+    // ============================================
+    // ၅။ ငွေကြေး ပြခြင်း
+    // ============================================
+    let price = 2300000;
+
+    console.log(price.toLocaleString());   // 2,300,000
+
+    let formatter = new Intl.NumberFormat("en-US");
+    console.log(formatter.format(price));  // 2,300,000
+
+    // ============================================
+    // ၆။ လက်တွေ့ — နာမည် ပြင်ဆင်ခြင်း
+    // ============================================
+    let input = "  aung aung  ";
+
+    let clean = input.trim();
+    let firstLetter = clean.charAt(0).toUpperCase();
+    let rest = clean.slice(1);
+
+    console.log(firstLetter + rest);   // Aung aung
+  </script>
+
+</body>
+</html>

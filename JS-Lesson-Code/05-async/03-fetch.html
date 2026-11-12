@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async 03 — fetch</title>
+</head>
+<body>
+
+  <h1>Async 03 — fetch (ဆာဗာကနေ ဒေတာ ယူခြင်း)</h1>
+
+  <!-- 👨‍🏫 ဆရာမှတ်ချက်: ဒီသင်ခန်းစာကို Live Server နဲ့ ဖွင့်ပါ။
+       အင်တာနက် မရှိရင် error ပြတာကို စမ်းကြည့်နိုင်တယ်။ -->
+
+  <button id="load-btn">ဒေတာ ယူမယ်</button>
+  <p id="status">Button နှိပ်ပါ</p>
+
+  <div id="list"></div>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let status = document.getElementById("status");
+    let list = document.getElementById("list");
+
+    const API = "https://jsonplaceholder.typicode.com/users";
+
+    // ============================================
+    // ၁။ fetch အခြေခံ (then)
+    // ============================================
+    // fetch(API)
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data))
+    //   .catch((error) => console.log(error));
+
+    // ============================================
+    // ၂။ async / await နဲ့
+    // ============================================
+    async function loadUsers() {
+      status.textContent = "ဖတ်နေတယ်...";
+      list.innerHTML = "";
+
+      try {
+        let response = await fetch(API);
+
+        // ⚠️ 404 / 500 ဆိုရင် fetch က error မပစ်ဘူး
+        // response.ok ကို ကိုယ်တိုင် စစ်ရတယ်
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        let users = await response.json();
+
+        status.textContent = `✅ အသုံးပြုသူ ${users.length} ယောက်`;
+
+        users.forEach((user) => {
+          let card = document.createElement("div");
+          card.style.cssText = "border:1px solid #ddd;padding:8px 12px;margin:6px 0;border-radius:8px;";
+
+          let name = document.createElement("strong");
+          name.textContent = user.name;
+
+          let email = document.createElement("div");
+          email.textContent = user.email;
+          email.style.color = "#666";
+
+          card.append(name, email);
+          list.append(card);
+        });
+      } catch (error) {
+        status.textContent = "❌ " + error.message;
+        show("error: " + error.message);
+      }
+    }
+
+    // ============================================
+    // ၃။ POST — ဒေတာ ပို့
+    // ============================================
+    async function createUser(user) {
+      try {
+        let response = await fetch(API, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(user)
+        });
+
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        let data = await response.json();
+        show("ပို့ပြီး id: " + data.id);
+      } catch (error) {
+        show("POST error: " + error.message);
+      }
+    }
+
+    // ============================================
+    // ၄။ Query string
+    // ============================================
+    async function searchUsers(keyword) {
+      let url = `${API}?name=${encodeURIComponent(keyword)}`;
+
+      let response = await fetch(url);
+      let users = await response.json();
+
+      show(`"${keyword}" ရှာတွေ့: ${users.length}`);
+    }
+
+    // ============================================
+    // ၅။ Button
+    // ============================================
+    document.getElementById("load-btn").addEventListener("click", loadUsers);
+
+    // ============================================
+    // ၆။ လက်တွေ့ — loading / error / success
+    // ============================================
+    // ၁။ loading ပြ
+    // ၂။ fetch
+    // ၃။ ok စစ်
+    // ၄။ json
+    // ၅။ ပြ
+    // ၆။ error ဆိုရင် catch မှာ ပြ
+    //
+    // ဒီအစီအစဉ်ကို အမြဲ လုပ်ပါ။
+
+    show("API: " + API);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Storage 01 — localStorage</title>
+</head>
+<body>
+
+  <h1>Storage 01 — localStorage</h1>
+
+  <p>
+    <input id="name-input" type="text" placeholder="နာမည်">
+    <button id="save-btn">သိမ်း</button>
+    <button id="load-btn">ဖတ်</button>
+    <button id="remove-btn">ဖျက်</button>
+    <button id="clear-btn">အားလုံး ရှင်း</button>
+  </p>
+
+  <p id="saved"></p>
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ သိမ်း / ဖတ်
+    // ============================================
+    // localStorage က key-value အနေနဲ့ သိမ်းတယ်
+    // တန်ဖိုးက string ပဲ ဖြစ်ရမယ်
+
+    localStorage.setItem("username", "Aung Aung");
+
+    let name = localStorage.getItem("username");
+    show("username: " + name);
+
+    // မရှိတဲ့ key က null ပြန်တယ်
+    show("မရှိတဲ့ key: " + localStorage.getItem("no-such-key"));
+
+    // ============================================
+    // ၂။ ဖျက်
+    // ============================================
+    // localStorage.removeItem("username");
+    // show("ဖျက်ပြီး: " + localStorage.getItem("username"));
+
+    // ⚠️ clear() က site တစ်ခုလုံးရဲ့ key အားလုံးကို ဖျက်တယ်
+    // localStorage.clear();
+
+    // ============================================
+    // ၃။ Object / Array သိမ်းခြင်း
+    // ============================================
+    let user = {
+      name: "Su Su",
+      age: 22,
+      city: "Yangon"
+    };
+
+    // object ကို string ဖြစ်အောင် အရင် ပြောင်း
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // ဖတ်တဲ့အခါ ပြန် parse
+    let savedUser = JSON.parse(localStorage.getItem("user"));
+
+    show("user name: " + savedUser.name);
+    show("user age: " + savedUser.age);
+
+    // ============================================
+    // ၄။ Array သိမ်းခြင်း
+    // ============================================
+    let students = [
+      { id: 1, name: "Aung" },
+      { id: 2, name: "Su" }
+    ];
+
+    localStorage.setItem("students", JSON.stringify(students));
+
+    let savedStudents = JSON.parse(localStorage.getItem("students"));
+    show("ကျောင်းသား အရေအတွက်: " + savedStudents.length);
+
+    // ============================================
+    // ၅။ Helper function (အသုံးအများဆုံး)
+    // ============================================
+    function saveData(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    function loadData(key, fallback) {
+      let text = localStorage.getItem(key);
+
+      // မရှိသေးရင် fallback ပြန်
+      if (text === null) {
+        return fallback;
+      }
+
+      return JSON.parse(text);
+    }
+
+    saveData("cart", [{ id: 1, qty: 2 }]);
+
+    let cart = loadData("cart", []);
+    show("cart: " + JSON.stringify(cart));
+
+    let emptyCart = loadData("nothing", []);
+    show("မရှိရင်: " + JSON.stringify(emptyCart));
+
+    // ============================================
+    // ၆။ Button တွေ
+    // ============================================
+    let input = document.getElementById("name-input");
+    let saved = document.getElementById("saved");
+
+    function render() {
+      let value = localStorage.getItem("username");
+      saved.textContent = value === null ? "သိမ်းထားတာ မရှိဘူး" : "သိမ်းထား: " + value;
+    }
+
+    document.getElementById("save-btn").addEventListener("click", () => {
+      localStorage.setItem("username", input.value);
+      render();
+      show("သိမ်းပြီး: " + input.value);
+    });
+
+    document.getElementById("load-btn").addEventListener("click", () => {
+      let value = localStorage.getItem("username");
+      show("ဖတ်တယ်: " + value);
+    });
+
+    document.getElementById("remove-btn").addEventListener("click", () => {
+      localStorage.removeItem("username");
+      render();
+      show("username ဖျက်ပြီး");
+    });
+
+    document.getElementById("clear-btn").addEventListener("click", () => {
+      localStorage.clear();
+      render();
+      show("အားလုံး ရှင်းပြီး");
+    });
+
+    render();
+
+    // ============================================
+    // ၇။ Key အားလုံး ကြည့်
+    // ============================================
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      show("key: " + key);
+    }
+
+    // ============================================
+    // ၈။ localStorage vs sessionStorage
+    // ============================================
+    // localStorage   — browser ပိတ်လည်း ကျန်တယ်
+    // sessionStorage — tab ပိတ်ရင် ပျက်တယ်
+    sessionStorage.setItem("temp", "ဒီ tab မှာပဲ");
+
+    show("session: " + sessionStorage.getItem("temp"));
+
+    // 🧑‍🎓 မှတ်ချက်: localStorage က string ပဲ သိမ်းတယ်။
+    // ဂဏန်း သိမ်းရင် ပြန်ဖတ်တဲ့အခါ string ဖြစ်နေမယ်။
+    localStorage.setItem("age", 20);
+    show("age type: " + typeof localStorage.getItem("age"));   // string
+  </script>
+
+</body>
+</html>

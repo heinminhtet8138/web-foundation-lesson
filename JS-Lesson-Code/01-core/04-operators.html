@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04 — Operators</title>
+</head>
+<body>
+
+  <h1>04 — Operators (တွက်ချက်တဲ့ သင်္ကေတများ)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    let a = 10;
+    let b = 3;
+
+    // ============================================
+    // ၁။ ဂဏန်း တွက်ချက်မှု
+    // ============================================
+    console.log(a + b);    // 13
+    console.log(a - b);    // 7
+    console.log(a * b);    // 30
+    console.log(a / b);    // 3.3333...
+    console.log(a % b);    // 1     (အကြွင်း)
+    console.log(a ** b);   // 1000  (a ကို b ခါ မြှောက်)
+
+    // ============================================
+    // ၂။ String ပေါင်းခြင်း
+    // ============================================
+    console.log("Aung" + " " + "Aung");   // Aung Aung
+
+    // ⚠️ string + number
+    console.log("5" + 2);   // "52"  (စာသား ဖြစ်သွားတယ်)
+    console.log("5" - 2);   // 3     (ဂဏန်း ဖြစ်သွားတယ်)
+
+    // ============================================
+    // ၃။ နှိုင်းယှဉ်ခြင်း
+    // ============================================
+    console.log(10 == "10");    // true
+    console.log(10 === "10");   // false  ✅ ဒါကို သုံးပါ
+    console.log(10 != 5);       // true
+    console.log(10 !== "10");   // true
+    console.log(10 > 5);        // true
+    console.log(10 < 5);        // false
+    console.log(10 >= 10);      // true
+    console.log(10 <= 9);       // false
+
+    // ============================================
+    // ၄။ အတိုကောက် ရေးနည်း
+    // ============================================
+    let x = 5;
+
+    x += 2;    // x = x + 2  → 7
+    console.log(x);
+
+    x -= 1;    // 6
+    console.log(x);
+
+    x *= 2;    // 12
+    console.log(x);
+
+    x /= 3;    // 4
+    console.log(x);
+
+    x %= 3;    // 1
+    console.log(x);
+
+    x++;       // 1 ကို 1 တိုး → 2
+    console.log(x);
+
+    x--;       // 1
+    console.log(x);
+
+    // ============================================
+    // ၅။ Logic (&&, ||, !)
+    // ============================================
+    let age = 20;
+
+    console.log(age >= 18 && age <= 30);   // true  (နှစ်ခုလုံး မှန်ရမယ်)
+    console.log(age < 18 || age > 60);     // false (တစ်ခု မှန်ရင် ရ)
+    console.log(!true);                    // false
+
+    // ဥပမာ — အသက် ၁၈ ပြည့်ပြီး ကျောင်းသား ဖြစ်ရမယ်
+    let isStudent = true;
+    console.log(age >= 18 && isStudent);   // true
+  </script>
+
+</body>
+</html>

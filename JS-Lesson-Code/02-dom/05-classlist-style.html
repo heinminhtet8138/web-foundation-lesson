@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 05 — classList & Style</title>
+
+  <style>
+    /* 👨‍🏫 ဆရာမှတ်ချက်: class တွေကို CSS မှာ အရင်ရေးထားပြီး
+       JS က class ကို လှန်ရုံပဲ လုပ်တယ်။ ဒါက အကောင်းဆုံး နည်းလမ်း။ */
+    .box {
+      padding: 12px;
+      border: 1px solid #ccc;
+      margin-bottom: 8px;
+    }
+
+    .active {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+
+    .big {
+      font-size: 24px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>DOM 05 — classList &amp; style</h1>
+
+  <div id="box1" class="box">Box 1</div>
+  <div id="box2" class="box">Box 2</div>
+  <div id="box3" class="box hidden">Box 3 (ဖျောက်ထား)</div>
+
+  <button id="toggle-btn">Toggle</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let box1 = document.getElementById("box1");
+    let box3 = document.getElementById("box3");
+
+    // ============================================
+    // ၁။ classList.add / remove
+    // ============================================
+    box1.classList.add("active");
+    show("add ပြီး: " + box1.className);
+
+    box1.classList.remove("active");
+    show("remove ပြီး: " + box1.className);
+
+    // ============================================
+    // ၂။ classList.toggle — ရှိရင် ဖျက်၊ မရှိရင် ထည့်
+    // ============================================
+    box1.classList.toggle("big");
+    show("toggle ၁: " + box1.className);
+
+    box1.classList.toggle("big");
+    show("toggle ၂: " + box1.className);
+
+    // ============================================
+    // ၃။ classList.contains — ရှိမရှိ စစ်
+    // ============================================
+    show("hidden ရှိလား: " + box3.classList.contains("hidden"));
+
+    // ============================================
+    // ၄။ ဖျောက် / ပြ
+    // ============================================
+    box3.classList.remove("hidden");
+    show("ပြပြီး hidden ရှိလား: " + box3.classList.contains("hidden"));
+
+    // ============================================
+    // ၅။ replace — class အဟောင်း နေရာ အသစ်
+    // ============================================
+    let box2 = document.getElementById("box2");
+
+    box2.classList.replace("box", "active");
+    show("box2: " + box2.className);
+
+    // ============================================
+    // ၆။ style — တိုက်ရိုက် ပြင်
+    // ============================================
+    box2.style.color = "white";
+    box2.style.backgroundColor = "#3b82f6";
+    box2.style.padding = "20px";
+    box2.style.borderRadius = "10px";
+
+    show("box2 color: " + box2.style.color);
+
+    // ============================================
+    // ၇။ style.cssText — တစ်ခါတည်း အများ
+    // ============================================
+    box2.style.cssText = "color: white; background: #16a34a; padding: 20px; border-radius: 10px;";
+
+    // ⚠️ cssText က အဟောင်း style အားလုံးကို အစားထိုးတယ်
+
+    // ============================================
+    // ၈။ ဖျက်ခြင်း
+    // ============================================
+    box2.style.removeProperty("border-radius");
+    // သို့မဟုတ်
+    box2.style.borderRadius = "";
+
+    // ============================================
+    // ၉။ getComputedStyle — အမှန်တကယ် တွက်ပြီးသား တန်ဖိုး
+    // ============================================
+    let styles = getComputedStyle(box2);
+
+    show("padding: " + styles.padding);
+    show("အရောင်: " + styles.color);
+
+    // ============================================
+    // ၁၀။ Button နဲ့ toggle
+    // ============================================
+    document.getElementById("toggle-btn").addEventListener("click", () => {
+      box1.classList.toggle("active");
+      box1.classList.toggle("big");
+    });
+
+
+    // ============================================
+    // ၁၁။ လက်တွေ့ — error message ပြ / ဖျောက်
+    // ============================================
+    function showError(element, message) {
+      element.textContent = message;
+      element.classList.add("active");
+    }
+
+    function clearError(element) {
+      element.textContent = "";
+      element.classList.remove("active");
+    }
+
+    showError(box1, "ဒါက error ပုံစံ");
+    show("box1: " + box1.className);
+
+    clearError(box1);
+    show("ရှင်းပြီး: " + box1.className);
+  </script>
+
+</body>
+</html>

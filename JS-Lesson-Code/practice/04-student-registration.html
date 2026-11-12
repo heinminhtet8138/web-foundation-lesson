@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice 04 — ကျောင်းသား CRUD</title>
+
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, select, button { padding: 6px 10px; font-size: 14px; }
+    table { border-collapse: collapse; margin-top: 12px; width: 100%; max-width: 760px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f3f4f6; }
+    .hidden { display: none; }
+    #form-message { font-weight: bold; }
+    .error { color: red; }
+    .success { color: green; }
+  </style>
+</head>
+<body>
+
+  <h1>ကျောင်းသား မှတ်ပုံတင် (CRUD)</h1>
+
+  <h2 id="form-title">ကျောင်းသား အသစ် ထည့်</h2>
+
+  <form id="form">
+    <input id="name" type="text" placeholder="နာမည်">
+    <input id="email" type="text" placeholder="အီးမေးလ်">
+    <input id="phone" type="text" placeholder="ဖုန်း">
+
+    <select id="year">
+      <option value="ပထမနှစ်">ပထမနှစ်</option>
+      <option value="ဒုတိယနှစ်">ဒုတိယနှစ်</option>
+      <option value="တတိယနှစ်">တတိယနှစ်</option>
+    </select>
+
+    <button type="submit" id="submit-btn">ထည့်ပါ</button>
+    <button type="button" id="cancel-btn" class="hidden">မလုပ်တော့</button>
+  </form>
+
+  <p id="form-message"></p>
+
+  <h2>စာရင်း (<span id="student-count">0</span> ယောက်)</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>နာမည်</th>
+        <th>အီးမေးလ်</th>
+        <th>ဖုန်း</th>
+        <th>နှစ်</th>
+        <th>လုပ်</th>
+      </tr>
+    </thead>
+    <tbody id="student-body"></tbody>
+  </table>
+
+  <script>
+    // ============================================
+    // ၁။ အခြေအနေ
+    // ============================================
+    const STORAGE_KEY = "students";
+
+    let students = loadStudents();
+    let editingId = null;   // null ဆိုရင် အသစ်ထည့်နေတယ်
+
+    let form = document.getElementById("form");
+    let nameInput = document.getElementById("name");
+    let emailInput = document.getElementById("email");
+    let phoneInput = document.getElementById("phone");
+    let yearInput = document.getElementById("year");
+
+    let formTitle = document.getElementById("form-title");
+    let submitBtn = document.getElementById("submit-btn");
+    let cancelBtn = document.getElementById("cancel-btn");
+    let messageEl = document.getElementById("form-message");
+    let tbody = document.getElementById("student-body");
+    let countEl = document.getElementById("student-count");
+
+    // ============================================
+    // ၂။ localStorage
+    // ============================================
+    function loadStudents() {
+      let text = localStorage.getItem(STORAGE_KEY);
+
+      if (text === null) {
+        return [];
+      }
+
+      return JSON.parse(text);
+    }
+
+    function saveStudents() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+    }
+
+    // ============================================
+    // ၃။ စာရင်း ပြ
+    // ============================================
+    function render() {
+      tbody.innerHTML = "";
+      countEl.textContent = students.length;
+
+      if (students.length === 0) {
+        let tr = document.createElement("tr");
+        let td = document.createElement("td");
+
+        td.colSpan = 6;
+        td.textContent = "ကျောင်းသား မရှိသေးပါ";
+
+        tr.append(td);
+        tbody.append(tr);
+        return;
+      }
+
+      let fragment = document.createDocumentFragment();
+
+      students.forEach((student, index) => {
+        let tr = document.createElement("tr");
+
+        let noTd = document.createElement("td");
+        noTd.textContent = index + 1;
+
+        let nameTd = document.createElement("td");
+        nameTd.textContent = student.name;
+
+        let emailTd = document.createElement("td");
+        emailTd.textContent = student.email;
+
+        let phoneTd = document.createElement("td");
+        phoneTd.textContent = student.phone;
+
+        let yearTd = document.createElement("td");
+        yearTd.textContent = student.year;
+
+        // ---- လုပ်ဆောင်ချက် button ----
+        let actionTd = document.createElement("td");
+
+        let editBtn = document.createElement("button");
+        editBtn.textContent = "ပြင်";
+        editBtn.className = "edit";
+        editBtn.dataset.id = student.id;
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "ဖျက်";
+        deleteBtn.className = "delete";
+        deleteBtn.dataset.id = student.id;
+
+        actionTd.append(editBtn, deleteBtn);
+
+        tr.append(noTd, nameTd, emailTd, phoneTd, yearTd, actionTd);
+        fragment.append(tr);
+      });
+
+      tbody.append(fragment);
+    }
+
+    // ============================================
+    // ၄။ စစ်ဆေး
+    // ============================================
+    function validate() {
+      let name = nameInput.value.trim();
+      let email = emailInput.value.trim();
+      let phone = phoneInput.value.trim();
+
+      if (name === "") {
+        return "နာမည် ထည့်ပါ";
+      }
+
+      if (email === "" || !email.includes("@")) {
+        return "အီးမေးလ် မှန်ကန်အောင် ထည့်ပါ";
+      }
+
+      if (phone === "" || phone.length < 7) {
+        return "ဖုန်းနံပါတ် မှန်ကန်အောင် ထည့်ပါ";
+      }
+
+      return "";
+    }
+
+    // ============================================
+    // ၅။ ထည့် / ပြင်
+    // ============================================
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      let error = validate();
+
+      if (error !== "") {
+        messageEl.textContent = "❌ " + error;
+        messageEl.className = "error";
+        return;
+      }
+
+      let data = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        year: yearInput.value
+      };
+
+      if (editingId === null) {
+        // ---- အသစ် ----
+        data.id = String(Date.now());
+
+        students.push(data);
+        messageEl.textContent = "✅ ကျောင်းသား အသစ် ထည့်ပြီး";
+      } else {
+        // ---- ပြင် ----
+        let student = students.find((s) => s.id === editingId);
+
+        student.name = data.name;
+        student.email = data.email;
+        student.phone = data.phone;
+        student.year = data.year;
+
+        messageEl.textContent = "✅ ပြင်ဆင်ပြီး";
+      }
+
+      messageEl.className = "success";
+
+      saveStudents();
+      render();
+      resetForm();
+    });
+
+    // ============================================
+    // ၆။ Form ပြန်ရှင်း
+    // ============================================
+    function resetForm() {
+      form.reset();
+      editingId = null;
+
+      formTitle.textContent = "ကျောင်းသား အသစ် ထည့်";
+      submitBtn.textContent = "ထည့်ပါ";
+      cancelBtn.classList.add("hidden");
+
+      nameInput.focus();
+    }
+
+    // ============================================
+    // ၇။ ပြင် စတင်
+    // ============================================
+    function startEdit(id) {
+      let student = students.find((s) => s.id === id);
+
+      if (!student) {
+        return;
+      }
+
+      editingId = id;
+
+      nameInput.value = student.name;
+      emailInput.value = student.email;
+      phoneInput.value = student.phone;
+      yearInput.value = student.year;
+
+      formTitle.textContent = "ကျောင်းသား ပြင်ဆင်ခြင်း";
+      submitBtn.textContent = "ပြင်ပါ";
+      cancelBtn.classList.remove("hidden");
+
+      messageEl.textContent = "";
+
+      nameInput.focus();
+    }
+
+    // ============================================
+    // ၈။ ဖျက်
+    // ============================================
+    function deleteStudent(id) {
+      let student = students.find((s) => s.id === id);
+
+      if (!student) {
+        return;
+      }
+
+      let ok = confirm(`"${student.name}" ကို ဖျက်မှာ သေချာလား?`);
+
+      if (!ok) {
+        return;
+      }
+
+      students = students.filter((s) => s.id !== id);
+
+      saveStudents();
+      render();
+
+      messageEl.textContent = "🗑️ ဖျက်ပြီး";
+      messageEl.className = "success";
+
+      // ဖျက်နေတဲ့ ကျောင်းသားကို ပြင်နေရင် form ပြန်ရှင်း
+      if (editingId === id) {
+        resetForm();
+      }
+    }
+
+    // ============================================
+    // ၉။ Table မှာ Delegation
+    // ============================================
+    tbody.addEventListener("click", (event) => {
+      let editBtn = event.target.closest(".edit");
+      let deleteBtn = event.target.closest(".delete");
+
+      if (editBtn) {
+        startEdit(editBtn.dataset.id);
+        return;
+      }
+
+      if (deleteBtn) {
+        deleteStudent(deleteBtn.dataset.id);
+      }
+    });
+
+    // ============================================
+    // ၁၀။ မလုပ်တော့
+    // ============================================
+    cancelBtn.addEventListener("click", () => {
+      messageEl.textContent = "";
+      resetForm();
+    });
+
+    // ============================================
+    // ၁၁။ စတင်
+    // ============================================
+    render();
+  </script>
+
+</body>
+</html>

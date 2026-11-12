@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Profile Card</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 30px;
+        }
+
+        .profile {
+            border: 1px solid gray;
+            padding: 20px;
+            width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Create Your Profile</h1>
+
+    <!-- Profile Form -->
+    <form id="profileForm">
+
+        <!-- Name Input -->
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter your name"
+            required
+        >
+
+        <br>
+
+        <!-- Job Input -->
+        <input
+            type="text"
+            id="job"
+            placeholder="Enter your job"
+            required
+        >
+
+        <br>
+
+        <button type="submit">Update Profile</button>
+
+        <button type="reset" id="resetBtn">Reset</button>
+
+    </form>
+
+    <!-- Profile Card -->
+    <div class="profile">
+
+        <h2 id="profileName">Your Name</h2>
+
+        <p id="profileJob">Your Job</p>
+
+    </div>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const form = document.getElementById("profileForm");
+
+        const username = document.getElementById("username");
+
+        const job = document.getElementById("job");
+
+        const profileName = document.getElementById("profileName");
+
+        const profileJob = document.getElementById("profileJob");
+
+        const resetBtn = document.getElementById("resetBtn");
+
+
+        // Input မှာ စာရိုက်တဲ့အခါ
+        username.addEventListener("input", function() {
+
+            // Profile Name ကို Live Update လုပ်ခြင်း
+            profileName.textContent = username.value || "Your Name";
+
+        });
+
+
+        // Name Input ကို Focus ဝင်တဲ့အခါ
+        username.addEventListener("focus", function() {
+
+            username.style.border = "2px solid blue";
+
+        });
+
+
+        // Name Input က Focus ထွက်တဲ့အခါ
+        username.addEventListener("blur", function() {
+
+            username.style.border = "1px solid gray";
+
+        });
+
+
+        // Form ကို Submit လုပ်တဲ့အခါ
+        form.addEventListener("submit", function(event) {
+
+            // Browser ရဲ့ Default Submit ကို တားဆီးခြင်း
+            event.preventDefault();
+
+            // Profile Name ကို Update လုပ်ခြင်း
+            profileName.textContent = username.value;
+
+            // Profile Job ကို Update လုပ်ခြင်း
+            profileJob.textContent = job.value;
+
+            // Success Message ပြခြင်း
+            alert("Profile Updated Successfully!");
+
+        });
+
+
+        // Reset Button ကို Click လုပ်တဲ့အခါ
+        resetBtn.addEventListener("click", function() {
+
+            // Profile ကို မူလအတိုင်း ပြန်ထားခြင်း
+            profileName.textContent = "Your Name";
+
+            profileJob.textContent = "Your Job";
+
+        });
+
+    </script>
+
+</body>
+</html>

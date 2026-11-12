@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events 02 — Event Object</title>
+</head>
+<body>
+
+  <h1>Events 02 — Event Object</h1>
+
+  <div id="outer" style="padding:16px;border:1px solid #ccc;">
+    အပြင် အကွက်
+    <button id="inner">အတွင်း Button</button>
+  </div>
+
+  <form id="form">
+    <input id="text" type="text" placeholder="စာသား">
+    <button type="submit">ပို့မယ်</button>
+  </form>
+
+  <a id="link" href="https://example.com">Link ကို နှိပ်ကြည့်</a>
+
+  <div id="area" style="height:80px;border:1px dashed #999;margin-top:10px;">
+    ဒီနေရာကို နှိပ်ကြည့်
+  </div>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ target နဲ့ currentTarget
+    // ============================================
+    let outer = document.getElementById("outer");
+    let inner = document.getElementById("inner");
+
+    outer.addEventListener("click", (event) => {
+      show("currentTarget: " + event.currentTarget.id);
+      show("target: " + event.target.tagName);
+    });
+
+    inner.addEventListener("click", (event) => {
+      show("--- inner နှိပ် ---");
+      show("type: " + event.type);
+    });
+
+    // currentTarget — listener တပ်ထားတဲ့ element
+    // target — အမှန်တကယ် နှိပ်ခံရတဲ့ element
+
+    // ============================================
+    // ၂။ preventDefault — မူလ အပြုအမူ ရပ်
+    // ============================================
+    let form = document.getElementById("form");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();   // reload မဖြစ်အောင်
+
+      let value = document.getElementById("text").value;
+      show("ပို့တဲ့ တန်ဖိုး: " + value);
+    });
+
+    let link = document.getElementById("link");
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();   // link မလိုက်အောင်
+      show("link ကို ရပ်ထားတယ်");
+    });
+
+    // ============================================
+    // ၃။ key — ဘယ်ကီး နှိပ်လဲ
+    // ============================================
+    let text = document.getElementById("text");
+
+    text.addEventListener("keydown", (event) => {
+      show("key: " + event.key);
+
+      if (event.key === "Enter") {
+        show("Enter နှိပ်တယ်");
+      }
+    });
+
+    // ============================================
+    // ၄။ clientX / clientY — နှိပ်တဲ့ နေရာ
+    // ============================================
+    let area = document.getElementById("area");
+
+    area.addEventListener("click", (event) => {
+      show(`X: ${event.clientX}၊ Y: ${event.clientY}`);
+    });
+
+    // ============================================
+    // ၅။ event.type
+    // ============================================
+    let btn = document.getElementById("inner");
+
+    btn.addEventListener("mouseenter", (event) => {
+      show("event type: " + event.type);
+    });
+
+    // ============================================
+    // ၆။ target ကို သုံးပြီး class ပြင်
+    // ============================================
+    let box = document.createElement("button");
+    box.textContent = "ကိုယ့်ကိုယ်ကို ပြင်";
+    box.style.display = "block";
+    box.style.marginTop = "10px";
+
+    document.body.append(box);
+
+    box.addEventListener("click", (event) => {
+      event.target.style.background = "#fde68a";
+      event.target.textContent = "နှိပ်ပြီး";
+    });
+
+    // ============================================
+    // ၇။ event ကို ဖမ်းပြီး ဘာတွေ ပါလဲ ကြည့်
+    // ============================================
+    document.getElementById("area").addEventListener("dblclick", (event) => {
+      show("dblclick target: " + event.target.id);
+      show("button: " + event.button);
+    });
+
+    // ============================================
+    // ၈။ stopPropagation — အပေါ်ကို မတက်
+    // ============================================
+    // ⚠️ ဒါကို သတိထား သုံးပါ။ တခါတရံ debug ရခက်တယ်။
+    inner.addEventListener("click", (event) => {
+      event.stopPropagation();
+      show("အပေါ်ကို မတက်တော့ဘူး");
+    });
+  </script>
+
+</body>
+</html>

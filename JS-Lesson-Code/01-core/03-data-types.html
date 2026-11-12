@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 — Data Types</title>
+</head>
+<body>
+
+  <h1>03 — Data Types (တန်ဖိုး အမျိုးအစားများ)</h1>
+  <p>ရလဒ်ကို Console မှာ ကြည့်ပါ</p>
+
+  <script>
+    // ============================================
+    // ၁။ String — စာသား
+    // ============================================
+    let name = "Aung Aung";
+    let city = 'Yangon';
+    let text = `backtick လည်း ရတယ်`;
+
+    console.log(name, city, text);
+
+    // ============================================
+    // ၂။ Number — ဂဏန်း
+    // ============================================
+    let age = 20;
+    let price = 1500.5;
+    let minus = -10;
+
+    console.log(age, price, minus);
+
+    // ============================================
+    // ၃။ Boolean — မှန် / မှား
+    // ============================================
+    let isStudent = true;
+    let isLogin = false;
+
+    console.log(isStudent, isLogin);
+
+    // ============================================
+    // ၄။ null — တမင်တကာ "တန်ဖိုး မရှိ"
+    // ============================================
+    let selectedUser = null;
+    console.log(selectedUser);   // null
+
+    // ============================================
+    // ၅။ undefined — တန်ဖိုး မပေးရသေးဘူး
+    // ============================================
+    let phone;
+    console.log(phone);          // undefined
+
+    // ============================================
+    // ၆။ Array — တန်ဖိုး အများ
+    // ============================================
+    let fruits = ["apple", "banana", "mango"];
+
+    console.log(fruits);
+    console.log(fruits[0]);      // apple
+    console.log(fruits[2]);      // mango
+    console.log(fruits.length);  // 3
+
+    // ============================================
+    // ၇။ Object — အမည်တပ်ထားတဲ့ တန်ဖိုး အစု
+    // ============================================
+    let student = {
+      name: "Aung Aung",
+      age: 20,
+      isStudent: true
+    };
+
+    console.log(student);
+    console.log(student.name);   // Aung Aung
+    console.log(student.age);    // 20
+
+    // ============================================
+    // ၈။ typeof — အမျိုးအစား စစ်ခြင်း
+    // ============================================
+    console.log(typeof "hello");     // string
+    console.log(typeof 20);          // number
+    console.log(typeof true);        // boolean
+    console.log(typeof undefined);   // undefined
+    console.log(typeof null);        // object  (JS ရဲ့ ရှေးဟောင်း bug)
+    console.log(typeof fruits);      // object  (array က object မျိုးစု)
+    console.log(typeof student);     // object
+
+    // array ဖြစ်မဖြစ် စစ်ချင်ရင်
+    console.log(Array.isArray(fruits));   // true
+
+    // ⚠️ "20" (string) နဲ့ 20 (number) မတူဘူး
+    console.log("20" == 20);    // true  (တန်ဖိုးပဲ စစ်)
+    console.log("20" === 20);   // false (အမျိုးအစားပါ စစ်)
+  </script>
+
+</body>
+</html>

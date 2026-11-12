@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 01 — Select</title>
+</head>
+<body>
+
+  <h1 id="title">DOM 01 — Element ရှာခြင်း</h1>
+
+  <p class="note">ဒီစာသားက class="note" ပါ</p>
+  <p class="note">ဒါလည်း class="note" ပါ</p>
+
+  <ul id="list">
+    <li class="item">Apple</li>
+    <li class="item">Banana</li>
+    <li class="item">Mango</li>
+  </ul>
+
+  <div id="box">
+    <span>အတွင်းက span</span>
+  </div>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ getElementById — id နဲ့ ရှာ (အမြန်ဆုံး)
+    // ============================================
+    let title = document.getElementById("title");
+    show("title: " + title.textContent);
+
+    // ============================================
+    // ၂။ querySelector — CSS selector နဲ့ ရှာ
+    // ပထမဆုံး တွေ့တာ တစ်ခုပဲ ပြန်တယ်
+    // ============================================
+    let firstNote = document.querySelector(".note");
+    show("note: " + firstNote.textContent);
+
+    let list = document.querySelector("#list");
+    show("list ရဲ့ ကလေး အရေအတွက်: " + list.children.length);
+
+    // ============================================
+    // ၃။ querySelectorAll — အားလုံး ရှာ
+    // ============================================
+    let notes = document.querySelectorAll(".note");
+    show("note အရေအတွက်: " + notes.length);
+
+    // NodeList ကို forEach နဲ့ လှည့်
+    notes.forEach((el, index) => {
+      show(index + " : " + el.textContent);
+    });
+
+    let items = document.querySelectorAll(".item");
+    show("item အရေအတွက်: " + items.length);
+
+    items.forEach((li) => show(" - " + li.textContent));
+
+    // ============================================
+    // ၄။ Tag နဲ့ ရှာ
+    // ============================================
+    let allLi = document.querySelectorAll("li");
+    show("li အားလုံး: " + allLi.length);
+
+    // ============================================
+    // ၅။ ရှာမတွေ့ရင် null ရတယ်
+    // ============================================
+    let notFound = document.querySelector("#no-such-id");
+    show("မတွေ့ရင်: " + notFound);
+
+    // ⚠️ null ဖြစ်နေရင် .textContent လုပ်ရင် error ပစ်တယ်
+    if (notFound !== null) {
+      show(notFound.textContent);
+    } else {
+      show("null ဖြစ်နေတယ် — အရင် စစ်ရမယ်");
+    }
+
+    // ============================================
+    // ၆။ အတွင်းက element ရှာ
+    // ============================================
+    let box = document.querySelector("#box");
+    let span = box.querySelector("span");
+    show("box ထဲက span: " + span.textContent);
+
+    // ============================================
+    // ၇။ အပေါ်ကို ပြန်တက်
+    // ============================================
+    let firstItem = document.querySelector(".item");
+    show("item ရဲ့ parent: " + firstItem.parentElement.tagName);
+
+    // ============================================
+    // ၈။ အားလုံးကို array အဖြစ် ပြောင်း
+    // ============================================
+    let liArray = [...document.querySelectorAll("li")];
+    show("array အဖြစ်: " + Array.isArray(liArray));
+
+    let names = liArray.map((li) => li.textContent);
+    show("နာမည်များ: " + names.join(", "));
+  </script>
+
+</body>
+</html>

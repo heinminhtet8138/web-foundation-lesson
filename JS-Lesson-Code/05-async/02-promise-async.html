@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async 02 — Promise & async/await</title>
+</head>
+<body>
+
+  <h1>Async 02 — Promise &amp; async/await</h1>
+
+  <button id="run-btn">စမ်းမယ်</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ Promise ဆောက်ခြင်း
+    // ============================================
+    // resolve — အောင်မြင်
+    // reject  — အမှား
+
+    function getData() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          let ok = true;
+
+          if (ok) {
+            resolve("ဒေတာ ရပြီ");
+          } else {
+            reject("ဒေတာ မရဘူး");
+          }
+        }, 1000);
+      });
+    }
+
+    // ============================================
+    // ၂။ then / catch / finally
+    // ============================================
+    getData()
+      .then((data) => {
+        show("then: " + data);
+      })
+      .catch((error) => {
+        show("catch: " + error);
+      })
+      .finally(() => {
+        show("finally: အမြဲ run");
+      });
+
+    // ============================================
+    // ၃။ async / await
+    // ============================================
+    async function run() {
+      try {
+        show("စောင့်နေတယ်...");
+
+        let data = await getData();   // ဒီမှာ စောင့်တယ်
+
+        show("await: " + data);
+      } catch (error) {
+        show("error: " + error);
+      }
+    }
+
+    run();
+
+    // ============================================
+    // ၄။ အောင်မြင် / မအောင်မြင် နှစ်မျိုး
+    // ============================================
+    function checkAge(age) {
+      return new Promise((resolve, reject) => {
+        if (age >= 18) {
+          resolve("ကြိုဆိုပါတယ်");
+        } else {
+          reject(new Error("အသက် မပြည့်ဘူး"));
+        }
+      });
+    }
+
+    async function test(age) {
+      try {
+        let result = await checkAge(age);
+        show(age + " → " + result);
+      } catch (error) {
+        show(age + " → ❌ " + error.message);
+      }
+    }
+
+    test(20);
+    test(15);
+
+    // ============================================
+    // ၅။ Promise.all — အားလုံး ပြီးအောင် စောင့်
+    // ============================================
+    function delay(ms, value) {
+      return new Promise((resolve) => setTimeout(() => resolve(value), ms));
+    }
+
+    async function runAll() {
+      show("all စတယ်");
+
+      let results = await Promise.all([
+        delay(500, "A"),
+        delay(300, "B"),
+        delay(100, "C")
+      ]);
+
+      show("all: " + results.join(", "));
+    }
+
+    runAll();
+
+    // ============================================
+    // ၆။ Promise.allSettled — တစ်ခု ကျရင်လည်း ဆက်
+    // ============================================
+    async function runSettled() {
+      let results = await Promise.allSettled([
+        Promise.resolve("ok"),
+        Promise.reject("fail"),
+        Promise.resolve("ok2")
+      ]);
+
+      results.forEach((r) => {
+        show(r.status + " : " + (r.value ?? r.reason));
+      });
+    }
+
+    runSettled();
+
+    // ============================================
+    // ၇။ Button နဲ့
+    // ============================================
+    document.getElementById("run-btn").addEventListener("click", async () => {
+      show("--- button နှိပ် ---");
+
+      let data = await getData();
+      show("button: " + data);
+    });
+
+    // ⚠️ await ကို async function ထဲမှာပဲ သုံးရတယ်
+    // (module ထဲမှာတော့ အပြင်လည်း ရတယ်)
+  </script>
+
+</body>
+</html>

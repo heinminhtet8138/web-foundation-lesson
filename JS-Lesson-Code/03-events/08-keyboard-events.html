@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Keyboard Events</title>
+</head>
+<body>
+
+    <h1>Keyboard Events</h1>
+
+    <!-- Keyboard နဲ့ စာရိုက်မယ့် Input -->
+    <input type="text" id="username"
+           placeholder="Press any key">
+
+    <!-- နှိပ်လိုက်တဲ့ Key ကို ပြမယ့်နေရာ -->
+    <p id="keydownResult">Key Down: None</p>
+
+    <!-- လွှတ်လိုက်တဲ့ Key ကို ပြမယ့်နေရာ -->
+    <p id="keyupResult">Key Up: None</p>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const username = document.getElementById("username");
+        const keydownResult = document.getElementById("keydownResult");
+        const keyupResult = document.getElementById("keyupResult");
+
+        // Keyboard Key တစ်ခုခုကို နှိပ်တဲ့အခါ
+        username.addEventListener("keydown", function(event) {
+
+            // နှိပ်လိုက်တဲ့ Key ကို ပြသခြင်း
+            keydownResult.textContent = "Key Down: " + event.key;
+
+        });
+
+        // Keyboard Key ကို ပြန်လွှတ်လိုက်တဲ့အခါ
+        username.addEventListener("keyup", function(event) {
+
+            // လွှတ်လိုက်တဲ့ Key ကို ပြသခြင်း
+            keyupResult.textContent = "Key Up: " + event.key;
+
+        });
+
+        // ရှင်းပြရန်
+        // - keydown – Keyboard Key ကို နှိပ်တဲ့အချိန်။
+        // - keyup – Keyboard Key ကို ပြန်လွှတ်တဲ့အချိန်။
+        // - event – ဖြစ်ပေါ်လာတဲ့ Event အကြောင်း အချက်အလက်တွေ ပါဝင်တဲ့ Object။
+        // - event.key – နှိပ်လိုက်တဲ့ Keyboard Key ကို ပြန်ပေးတယ်။
+
+    </script>
+
+</body>
+</html>

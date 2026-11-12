@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 04 — Traversal</title>
+</head>
+<body>
+
+  <h1>DOM 04 — Element ကြား သွားလာခြင်း</h1>
+
+  <div id="container">
+    <h2 id="heading">စာရင်း</h2>
+
+    <ul id="list">
+      <li class="item">Apple</li>
+      <li class="item">Banana</li>
+      <li class="item">Mango</li>
+    </ul>
+
+    <p id="footer">အောက်ခြေ စာသား</p>
+  </div>
+
+  <div class="card">
+    <h3>Card ခေါင်းစဉ်</h3>
+    <button class="delete">ဖျက်</button>
+  </div>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    // ============================================
+    // ၁။ parentElement — အပေါ်ကို တက်
+    // ============================================
+    let list = document.getElementById("list");
+
+    show("list ရဲ့ parent: " + list.parentElement.id);
+
+    // ============================================
+    // ၂။ children — ကလေး အားလုံး
+    // ============================================
+    show("list ရဲ့ ကလေ: " + list.children.length);
+
+    // ============================================
+    // ၃။ first / last
+    // ============================================
+    show("ပထမ: " + list.firstElementChild.textContent);
+    show("နောက်ဆုံး: " + list.lastElementChild.textContent);
+
+    // ============================================
+    // ၄။ next / previous sibling
+    // ============================================
+    let heading = document.getElementById("heading");
+
+    show("heading ရဲ့ အောက်: " + heading.nextElementSibling.id);
+    show("list ရဲ့ အပေါ်: " + list.previousElementSibling.id);
+    show("list ရဲ့ အောက်: " + list.nextElementSibling.id);
+
+    // ============================================
+    // ၅။ တစ်ခုချင်း လှည့်ခြင်း
+    // ============================================
+    let first = list.firstElementChild;
+
+    show("--- nextElementSibling နဲ့ လှည့် ---");
+
+    let current = first;
+
+    while (current !== null) {
+      show(current.textContent);
+      current = current.nextElementSibling;
+    }
+
+    // ============================================
+    // ၆။ closest — အပေါ်ကို တက် ရှာ
+    // ============================================
+    let item = list.querySelector(".item");
+
+    show("item ရဲ့ closest ul: " + item.closest("ul").id);
+    show("item ရဲ့ closest #container: " + item.closest("#container").id);
+
+    // ⚠️ closest က ကိုယ်တိုင်ကစပြီး ရှာတယ်
+    show("item ကိုယ်တိုင်: " + (item.closest(".item") !== null));
+
+    // ============================================
+    // ၇။ Element အတွင်းမှာ ရှာ
+    // ============================================
+    let container = document.getElementById("container");
+
+    let insideItems = container.querySelectorAll(".item");
+    show("container ထဲက item: " + insideItems.length);
+
+    // ============================================
+    // ၈။ လက်တွေ့ — ဖျက်တဲ့ button
+    // ============================================
+    let deleteBtn = document.querySelector(".delete");
+
+    // button ရဲ့ အပေါ်က card ကို ရှာ
+    let card = deleteBtn.closest(".card");
+
+    show("button ရဲ့ card ခေါင်းစဉ်: " + card.querySelector("h3").textContent);
+
+    // ============================================
+    // ၉။ Index သိချင်ရင်
+    // ============================================
+    let items = [...list.children];
+
+    let index = items.indexOf(item);
+    show("item ရဲ့ index: " + index);
+
+    // ============================================
+    // ၁၀။ textContent နဲ့ children တွဲသုံး
+    // ============================================
+    let names = [...list.children].map((li) => li.textContent);
+    show("အားလုံး: " + names.join(" / "));
+  </script>
+
+</body>
+</html>

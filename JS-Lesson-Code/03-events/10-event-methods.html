@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Event Methods</title>
+</head>
+<body>
+
+    <h1>JavaScript Event Methods</h1>
+
+    <!-- ===================================== -->
+    <!-- PART 1: preventDefault() with Form -->
+    <!-- ===================================== -->
+
+    <h2>1. preventDefault() with Form</h2>
+
+    <!--
+        STEP 1:
+        Form တစ်ခု တည်ဆောက်ပါမယ်။
+
+        အသုံးပြုသူက Username ရိုက်ထည့်ပြီး
+        Submit Button ကို နှိပ်နိုင်ပါတယ်။
+    -->
+
+    <form id="myForm">
+
+        <label for="username">Username:</label>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter your name"
+            required
+        >
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <!-- Form Submit လုပ်ပြီးတဲ့အခါ ရလဒ်ပြသဖို့ -->
+    <p id="formResult"></p>
+
+
+    <!-- ===================================== -->
+    <!-- PART 2: preventDefault() with Link -->
+    <!-- ===================================== -->
+
+    <h2>2. preventDefault() with Link</h2>
+
+    <!--
+        STEP 1:
+        Link တစ်ခု တည်ဆောက်ပါမယ်။
+
+        ပုံမှန်အားဖြင့် Link ကို Click လုပ်လိုက်ရင်
+        href ထဲမှာ သတ်မှတ်ထားတဲ့ Website ကို
+        Browser က သွားပေးပါတယ်။
+
+        ဒီဥပမာမှာ Google Website ကို သွားဖို့
+        သတ်မှတ်ထားပါတယ်။
+    -->
+
+    <a href="https://www.google.com" id="myLink">
+        Go to Google
+    </a>
+
+    <!-- Link Click လုပ်တဲ့အခါ ရလဒ်ပြသဖို့ -->
+    <p id="linkResult"></p>
+
+
+    <script>
+
+        // =====================================
+        // PART 1: preventDefault() with Form
+        // =====================================
+
+        /*
+            STEP 1:
+            Form Element ကို ရယူပါမယ်။
+        */
+
+        const form = document.getElementById("myForm");
+
+
+        /*
+            STEP 2:
+            Username Input Element ကို ရယူပါမယ်။
+        */
+
+        const username = document.getElementById("username");
+
+
+        /*
+            STEP 3:
+            Result Element ကို ရယူပါမယ်။
+        */
+
+        const formResult = document.getElementById("formResult");
+
+
+        /*
+            STEP 4:
+            Form ရဲ့ submit Event ကို နားထောင်ပါမယ်။
+
+            အသုံးပြုသူက Submit Button ကို Click လုပ်တဲ့အခါ
+            ဒါမှမဟုတ် Input ထဲမှာ Enter နှိပ်တဲ့အခါ
+            submit Event ဖြစ်ပေါ်လာပါတယ်။
+        */
+
+        form.addEventListener("submit", function(event) {
+
+            /*
+                STEP 5:
+                preventDefault() ကို အသုံးပြုပါမယ်။
+
+                ပုံမှန်အားဖြင့် Form Submit လုပ်တဲ့အခါ
+                Browser က Form Data ကို ပို့ပြီး
+                Page ကို Reload လုပ်ခြင်း သို့မဟုတ်
+                အခြား Page သို့ သွားခြင်းတွေ လုပ်နိုင်ပါတယ်။
+
+                preventDefault() က အဲဒီ Default Behavior ကို
+                တားဆီးပေးပါတယ်။
+            */
+
+            event.preventDefault();
+
+
+            /*
+                STEP 6:
+                Username Input ထဲက တန်ဖိုးကို ရယူပါမယ်။
+            */
+
+            const name = username.value;
+
+
+            /*
+                STEP 7:
+                ရရှိလာတဲ့ Username ကို ပြသပါမယ်။
+            */
+
+            formResult.textContent = "Welcome, " + name + "!";
+
+        });
+
+
+
+        // =====================================
+        // PART 2: preventDefault() with Link
+        // =====================================
+
+        /*
+            STEP 1:
+            HTML ထဲက Link Element ကို ရယူပါမယ်။
+        */
+
+        const myLink = document.getElementById("myLink");
+
+
+        /*
+            STEP 2:
+            Link ရဲ့ Click Event ကို နားထောင်ပါမယ်။
+
+            ပုံမှန်အားဖြင့် Link ကို Click လုပ်ရင်
+            href ထဲမှာ သတ်မှတ်ထားတဲ့ Website ကို
+            Browser က သွားပေးပါတယ်။
+        */
+
+        myLink.addEventListener("click", function(event) {
+
+            /*
+                STEP 3:
+                preventDefault() ကို အသုံးပြုပါမယ်။
+
+                ဒီနေရာမှာ preventDefault() က
+                Link ရဲ့ ပုံမှန်လုပ်ဆောင်ချက်ဖြစ်တဲ့
+                Website သို့ သွားခြင်းကို တားဆီးပေးပါတယ်။
+
+                ဒါကြောင့် Google Website ကို
+                သွားတော့မှာ မဟုတ်ပါဘူး။
+            */
+
+            event.preventDefault();
+
+
+            /*
+                STEP 4:
+                Website ကို မသွားတော့ဘဲ
+                ကိုယ်လိုချင်တဲ့ JavaScript Code ကို
+                အစားထိုး လုပ်ဆောင်နိုင်ပါတယ်။
+            */
+
+            const linkResult = document.getElementById("linkResult");
+
+            linkResult.textContent = "Link Default Behavior Prevented!";
+
+            console.log("Link Clicked!");
+
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 03 — Create & Insert</title>
+</head>
+<body>
+
+  <h1>DOM 03 — Element ဆောက်ခြင်း / ထည့်ခြင်း</h1>
+
+  <ul id="list"></ul>
+
+  <div id="box">
+    <p id="middle">အလယ် စာသား</p>
+  </div>
+
+  <pre id="output"></pre>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function show(text) {
+      output.textContent += text + "\n";
+    }
+
+    let list = document.getElementById("list");
+
+    // ============================================
+    // ၁။ createElement + append
+    // ============================================
+    let li = document.createElement("li");
+    li.textContent = "Item 1";
+
+    list.append(li);
+
+    // ============================================
+    // ၂။ Loop နဲ့ အများ ဆောက်
+    // ============================================
+    let fruits = ["Apple", "Banana", "Mango"];
+
+    fruits.forEach((fruit) => {
+      let item = document.createElement("li");
+      item.textContent = fruit;
+
+      list.append(item);
+    });
+
+    show("li အရေအတွက်: " + list.children.length);
+
+    // ============================================
+    // ၃။ append / prepend
+    // ============================================
+    let first = document.createElement("li");
+    first.textContent = "အရှေ့ဆုံး";
+    list.prepend(first);
+
+    let last = document.createElement("li");
+    last.textContent = "အနောက်ဆုံး";
+    list.append(last);
+
+    show("အရှေ့: " + list.firstElementChild.textContent);
+    show("အနောက်: " + list.lastElementChild.textContent);
+
+    // ============================================
+    // ၄။ before / after — မောင်နှမ နေရာ
+    // ============================================
+    let middle = document.getElementById("middle");
+
+    let beforeP = document.createElement("p");
+    beforeP.textContent = "အပေါ်က စာသား";
+    middle.before(beforeP);
+
+    let afterP = document.createElement("p");
+    afterP.textContent = "အောက်က စာသား";
+    middle.after(afterP);
+
+    // ============================================
+    // ၅။ Attribute ပါ တစ်ခါတည်း ထည့်
+    // ============================================
+    let link = document.createElement("a");
+    link.href = "https://example.com";
+    link.textContent = "ဒီမှာ နှိပ်ပါ";
+    link.target = "_blank";
+
+    document.getElementById("box").append(link);
+
+    // ============================================
+    // ၆။ class နဲ့ style ထည့်
+    // ============================================
+    let card = document.createElement("div");
+
+    card.className = "card";
+    card.textContent = "Card စာသား";
+    card.style.border = "1px solid #ccc";
+    card.style.padding = "8px";
+    card.style.marginTop = "8px";
+
+    document.getElementById("box").append(card);
+
+    // ============================================
+    // ၇။ DocumentFragment — အများ တစ်ခါတည်း ထည့်
+    // ============================================
+    let fragment = document.createDocumentFragment();
+
+    for (let i = 1; i <= 3; i++) {
+      let p = document.createElement("p");
+      p.textContent = "Fragment " + i;
+      fragment.append(p);
+    }
+
+    document.getElementById("box").append(fragment);
+
+    // fragment ကိုယ်တိုင် DOM ထဲ မဝင်ဘူး၊ ကလေးတွေပဲ ဝင်တယ်
+
+    // ============================================
+    // ၈။ remove / replaceWith
+    // ============================================
+    let removeMe = document.createElement("p");
+    removeMe.textContent = "ဖျက်ခံမယ်";
+    document.getElementById("box").append(removeMe);
+
+    removeMe.remove();
+
+    let oldP = document.createElement("p");
+    oldP.textContent = "အဟောင်း";
+    document.getElementById("box").append(oldP);
+
+    let newP = document.createElement("p");
+    newP.textContent = "အသစ်";
+
+    oldP.replaceWith(newP);
+
+    // ============================================
+    // ၉။ innerHTML = "" — အားလုံး ရှင်းလင်း
+    // ============================================
+    let temp = document.getElementById("box").querySelectorAll("p");
+    show("ရှင်းမီ p အရေအတွက်: " + temp.length);
+
+    // ⚠️ ဒီလို လုပ်ရင် အဲဒီ element အားလုံး ပျက်သွားတယ်
+    // list.innerHTML = "";
+
+    // ============================================
+    // ၁၀။ လက်တွေ့ — စာရင်း ပြန်ဆောက်
+    // ============================================
+    function renderList(names) {
+      list.innerHTML = "";   // အဟောင်း ရှင်း
+
+      names.forEach((name) => {
+        let item = document.createElement("li");
+        item.textContent = name;
+        list.append(item);
+      });
+    }
+
+    renderList(["Kyaw", "Su", "Aung"]);
+
+    show("အသစ် စာရင်း: " + list.textContent);
+  </script>
+
+</body>
+</html>

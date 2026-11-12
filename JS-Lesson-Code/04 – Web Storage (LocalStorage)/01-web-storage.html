@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Web Storage</title>
+</head>
+<body>
+
+    <h1>Introduction to Web Storage</h1>
+
+    <!-- 
+        STEP 1: Web Storage ဆိုတာဘာလဲ?
+
+        Web Storage ဆိုတာ Browser ထဲမှာ Data တွေကို
+        သိမ်းဆည်းထားနိုင်တဲ့ နည်းပညာတစ်ခုဖြစ်ပါတယ်။
+
+        ဥပမာ -
+        - User ရဲ့ Name
+        - User ရဲ့ Theme Preference
+        - Shopping Cart Data
+        - Todo List Data
+
+        Web Storage မှာ အဓိကအားဖြင့် ၂ မျိုးရှိပါတယ်။
+
+        1. LocalStorage
+        2. SessionStorage
+
+        ဒီ Lesson မှာ Web Storage ရဲ့ အခြေခံသဘောတရားကို
+        အရင်ဆုံး လေ့လာသွားမှာဖြစ်ပါတယ်။
+    -->
+
+    <hr>
+
+    <h2>1. JavaScript Variable</h2>
+
+    <p>Enter your name:</p>
+
+    <input type="text" id="userName" placeholder="Enter your name">
+
+    <button id="showButton">Show Name</button>
+
+    <p id="result"></p>
+
+    <!--
+        STEP 2: JavaScript Variable နဲ့ Data သိမ်းခြင်း
+
+        JavaScript Variable ထဲမှာ Data တွေကို
+        ယာယီသိမ်းဆည်းထားနိုင်ပါတယ်။
+
+        အောက်က Example မှာ userName ဆိုတဲ့ Variable တစ်ခု
+        တည်ဆောက်ထားပါတယ်။
+
+        Button ကိုနှိပ်လိုက်တဲ့အခါ Input ထဲက Name ကို
+        Variable ထဲမှာ သိမ်းပြီး Browser မှာ ပြသပေးမှာဖြစ်ပါတယ်။
+
+        ဒါပေမဲ့ Page ကို Reload လုပ်လိုက်ရင် JavaScript ကို
+        ပြန်လည်စတင်ရတဲ့အတွက် Variable ရဲ့ မူလ Value ကနေ
+        ပြန်စတင်သွားမှာဖြစ်ပါတယ်။
+
+        ဒါကြောင့် Page Reload လုပ်ပြီးနောက် Data ကို
+        ဆက်လက်ထိန်းသိမ်းထားချင်ရင် Web Storage လိုအပ်လာပါတယ်။
+    -->
+
+    <script>
+        // User Name ကို ယာယီသိမ်းဆည်းဖို့ Variable တည်ဆောက်ခြင်း
+        let userName = "";
+
+        // Button ကို ရယူခြင်း
+        const showButton = document.getElementById("showButton");
+
+        // Input ကို ရယူခြင်း
+        const userNameInput = document.getElementById("userName");
+
+        // Result Element ကို ရယူခြင်း
+        const result = document.getElementById("result");
+
+        // Button ကို Click လုပ်တဲ့အခါ အလုပ်လုပ်မယ့် Event
+        showButton.addEventListener("click", function () {
+
+            // Input ထဲက Value ကို Variable ထဲသိမ်းခြင်း
+            userName = userNameInput.value;
+
+            // Browser မှာ Result ပြသခြင်း
+            result.textContent = "Hello, " + userName;
+        });
+    </script>
+
+    <hr>
+
+    <h2>2. Web Storage Types</h2>
+
+    <!--
+        STEP 3: Web Storage အမျိုးအစား ၂ မျိုး
+
+        Web Storage မှာ LocalStorage နဲ့ SessionStorage ဆိုပြီး
+        အမျိုးအစား ၂ မျိုးရှိပါတယ်။
+
+        1. LocalStorage
+
+        - Data တွေကို Browser ထဲမှာ သိမ်းဆည်းထားနိုင်ပါတယ်။
+        - Browser ကို ပိတ်ပြီး ပြန်ဖွင့်တဲ့အခါမှာလည်း
+          Data တွေကို ဆက်လက်ထိန်းသိမ်းထားနိုင်ပါတယ်။
+        - User က Data ကို ကိုယ်တိုင်ဖျက်ခြင်း သို့မဟုတ်
+          Browser က ဖယ်ရှားခြင်း မရှိသေးသရွေ့ ရှိနေမှာဖြစ်ပါတယ်။
+
+        2. SessionStorage
+
+        - Data တွေကို လက်ရှိ Browser Tab ရဲ့ Session အတွင်း
+          သိမ်းဆည်းထားနိုင်ပါတယ်။
+        - Tab ကို ပိတ်လိုက်တဲ့အခါ ပုံမှန်အားဖြင့်
+          သိမ်းထားတဲ့ Data တွေ ပျောက်သွားပါတယ်။
+
+        အလွယ်မှတ်ရန် -
+
+        LocalStorage = Browser ပိတ်ပြီး ပြန်ဖွင့်လည်း Data ရှိနေမယ်။
+
+        SessionStorage = လက်ရှိ Tab Session အတွင်းပဲ Data ရှိနေမယ်။
+    -->
+
+    <h3>LocalStorage</h3>
+    <p>Data remains available after closing and reopening the browser.</p>
+
+    <h3>SessionStorage</h3>
+    <p>Data is available during the current tab session.</p>
+
+    <hr>
+
+    <h2>3. Web Storage vs Database</h2>
+
+    <!--
+        STEP 4: Web Storage နဲ့ Database ကွာခြားချက်
+
+        Web Storage နဲ့ Database ဟာ Data သိမ်းဆည်းဖို့
+        အသုံးပြုကြပေမဲ့ အလုပ်လုပ်ပုံ မတူညီပါဘူး။
+
+        Web Storage
+        - Browser ထဲမှာ Data သိမ်းပါတယ်။
+        - Client-side Storage ဖြစ်ပါတယ်။
+        - အသေးစား Data တွေ သိမ်းဖို့ အသုံးဝင်ပါတယ်။
+        - အခြား Device သို့မဟုတ် Browser နဲ့ အလိုအလျောက်
+          Share လုပ်လို့မရပါဘူး။
+
+        Database
+        - Server ပေါ်မှာ Data သိမ်းဆည်းနိုင်ပါတယ်။
+        - Application တစ်ခုရဲ့ Data တွေကို စီမံခန့်ခွဲနိုင်ပါတယ်။
+        - User အများအပြားရဲ့ Data တွေကို သိမ်းဆည်းနိုင်ပါတယ်။
+        - Application က သတ်မှတ်ထားတဲ့ Permission အတိုင်း
+          Data တွေကို ပြန်လည်အသုံးပြုနိုင်ပါတယ်။
+
+        အရေးကြီးချက် -
+
+        Password၊ Payment Information နဲ့ အရေးကြီးတဲ့
+        ကိုယ်ရေးကိုယ်တာ Data တွေကို Web Storage ထဲမှာ
+        လုံခြုံတယ်လို့ ယူဆပြီး မသိမ်းဆည်းသင့်ပါဘူး။
+    -->
+
+    <h3>Web Storage</h3>
+    <p>Stores data in the browser.</p>
+
+    <h3>Database</h3>
+    <p>Stores and manages application data.</p>
+
+    <hr>
+
+    <h2>4. Summary</h2>
+
+    <ul>
+        <li>Web Storage stores data in the browser.</li>
+        <li>There are two types: LocalStorage and SessionStorage.</li>
+        <li>LocalStorage keeps data after the browser is closed.</li>
+        <li>SessionStorage keeps data during the current tab session.</li>
+        <li>Web Storage is different from a Database.</li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Methods</title>
+</head>
+<body>
+
+    <h1>JSON Methods</h1>
+
+    <h2>1. Save User Data</h2>
+
+    <input type="text" id="nameInput" placeholder="Enter your name">
+
+    <input type="number" id="ageInput" placeholder="Enter your age">
+
+    <button id="saveButton">Save User</button>
+
+    <hr>
+
+    <h2>2. Get User Data</h2>
+
+    <button id="getButton">Get User</button>
+
+    <p id="result"></p>
+
+    <hr>
+
+    <h2>3. Show JSON String</h2>
+
+    <button id="showJsonButton">Show JSON</button>
+
+    <p id="jsonResult"></p>
+
+    <script>
+
+        // STEP 1: HTML Element တွေကို ရယူခြင်း
+        const nameInput = document.getElementById("nameInput");
+        const ageInput = document.getElementById("ageInput");
+
+        const saveButton = document.getElementById("saveButton");
+        const getButton = document.getElementById("getButton");
+        const showJsonButton = document.getElementById("showJsonButton");
+
+        const result = document.getElementById("result");
+        const jsonResult = document.getElementById("jsonResult");
+
+
+        // STEP 2: JavaScript Object တည်ဆောက်ခြင်း
+        // JavaScript Object ကို LocalStorage ထဲ တိုက်ရိုက်သိမ်းလို့မရပါဘူး။
+        // LocalStorage က String Data တွေကိုပဲ သိမ်းဆည်းနိုင်ပါတယ်။
+        // ဒါကြောင့် JSON.stringify() ကို အသုံးပြုရပါမယ်။
+
+
+        // STEP 3: Save User Button ကို Click လုပ်တဲ့အခါ
+        saveButton.addEventListener("click", function () {
+
+            // Input ထဲက Data တွေကို ရယူခြင်း
+            const user = {
+                name: nameInput.value,
+                age: Number(ageInput.value)
+            };
+
+            // JavaScript Object ကို JSON String ပြောင်းခြင်း
+            const jsonData = JSON.stringify(user);
+
+            // JSON String ကို LocalStorage ထဲ သိမ်းခြင်း
+            localStorage.setItem("user", jsonData);
+
+            result.textContent = "User saved successfully!";
+        });
+
+
+        // STEP 4: Get User Button ကို Click လုပ်တဲ့အခါ
+        getButton.addEventListener("click", function () {
+
+            // LocalStorage ထဲက JSON String ကို ပြန်ယူခြင်း
+            const jsonData = localStorage.getItem("user");
+
+            // Data ရှိ၊ မရှိ စစ်ဆေးခြင်း
+            if (jsonData !== null) {
+
+                // JSON String ကို JavaScript Object ပြန်ပြောင်းခြင်း
+                const user = JSON.parse(jsonData);
+
+                // Object ထဲက Property တွေကို အသုံးပြုခြင်း
+                result.textContent =
+                    "Name: " + user.name + " | Age: " + user.age;
+
+            } else {
+                result.textContent = "No user data found!";
+            }
+        });
+
+
+        // STEP 5: Show JSON Button ကို Click လုပ်တဲ့အခါ
+        showJsonButton.addEventListener("click", function () {
+
+            // LocalStorage ထဲက JSON String ကို ရယူခြင်း
+            const jsonData = localStorage.getItem("user");
+
+            // JSON String ကို ပြသခြင်း
+            if (jsonData !== null) {
+                jsonResult.textContent = jsonData;
+            } else {
+                jsonResult.textContent = "No JSON data found!";
+            }
+        });
+
+    </script>
+
+</body>
+</html>

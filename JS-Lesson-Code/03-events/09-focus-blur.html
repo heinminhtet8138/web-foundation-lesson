@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Focus and Blur Events</title>
+
+    <style>
+        input {
+            padding: 10px;
+            border: 2px solid gray;
+            outline: none;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Focus and Blur Example</h1>
+
+    <!-- User စာရိုက်မယ့် Input -->
+    <input type="text" id="username"
+           placeholder="Enter your name">
+
+    <!-- Event ဖြစ်ပေါ်မှုကို ပြမယ့်နေရာ -->
+    <p id="message">Please enter your name.</p>
+
+    <script>
+
+        // HTML Element တွေကို ရှာယူခြင်း
+        const username = document.getElementById("username");
+        const message = document.getElementById("message");
+
+        // Input ကို Focus ဝင်တဲ့အခါ
+        username.addEventListener("focus", function() {
+
+            // Input Border ကို အပြာရောင်ပြောင်းခြင်း
+            username.style.border = "2px solid blue";
+
+            // Message ပြောင်းခြင်း
+            message.textContent = "You are typing...";
+
+        });
+
+        // Input က Focus ထွက်သွားတဲ့အခါ
+        username.addEventListener("blur", function() {
+
+            // Input Border ကို မူလအရောင်ပြန်ထားခြင်း
+            username.style.border = "2px solid gray";
+
+            // Message ပြောင်းခြင်း
+            message.textContent = "You left the input field.";
+
+        });
+
+        // ရှင်းပြရန်
+        // - focus – Input ကို Click လုပ်ပြီး စာရိုက်နိုင်တဲ့ အခြေအနေဖြစ်လာတဲ့အခါ။
+        // - blur – Input ကနေ အခြားနေရာကို ပြောင်းသွားတဲ့အခါ။
+        // - style.border – CSS Border ကို JavaScript ကနေ ပြောင်းလဲခြင်း။
+
+    </script>
+
+</body>
+</html>
